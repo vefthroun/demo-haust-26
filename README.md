@@ -1,7 +1,8 @@
 # demo-haust-26
-verkefnadæmi fyrir nemendur
 
-Verkefni 1.
+> verkefnadæmi og glósur fyrir nemendur
+
+## Verkefni 1.
 
 ```python
 from flask import Flask, render_template
@@ -37,4 +38,4 @@ if __name__ == '__main__':
 
 **Mikilvæg athugasemd:** Samkvæmt heimildum ætti aldrei að nota villuleitarhaminn (`debug=True`) í raunverulegu vinnsluumhverfi (e. production) þar sem hann getur skapað öryggishættu með því að leyfa keyrslu á kóða beint úr vafra.
 
-
+## verkefni 2
