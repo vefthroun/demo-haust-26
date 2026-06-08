@@ -1,0 +1,50 @@
+    /* Light color scheme (Default) */
+    /* Can be forced with data-theme="light" */
+    [data-theme="light"],
+    :root:not([data-theme="dark"]) {
+        --pico-color-orange-900: #2d1509;
+        --pico-color-orange-850: #411a0a;
+        --pico-color-orange-800: #561e0a;
+        --pico-color-orange-750: #6b220a;
+        --pico-color-orange-700: #7f270b;
+        --pico-color-orange-650: #942d0d;
+        --pico-color-orange-600: #a83410;
+        --pico-color-orange-550: #bd3c13;
+        --pico-color-orange-500: #d24317;
+        --pico-color-orange-450: #e74b1a;
+        --pico-color-orange-400: #f45d2c;
+        --pico-color-orange-350: #f56b3d;
+        --pico-color-orange-300: #f68e68;
+        --pico-color-orange-250: #f8a283;
+        --pico-color-orange-200: #f8b79f;
+        --pico-color-orange-150: #f8cab9;
+        --pico-color-orange-100: #f9dcd2;
+        --pico-color-orange-50: #faeeea;
+        --pico-color-orange: #d24317;
+}
+    /* Dark color scheme (Auto) */
+    /* Automatically enabled if user has Dark mode enabled */
+    @media only screen and (prefers-color-scheme: dark) {
+        :root:not([data-theme]) {
+        --pico-color-orange-900: #faeeea;
+        --pico-color-orange-850: #f9dcd2;
+        --pico-color-orange-800: #f8cab9;
+        --pico-color-orange-750: #f8b79f;
+        --pico-color-orange-700: #f8b79f;
+        --pico-color-orange-650: #f8a283;
+        --pico-color-orange-600: #f68e68;
+        --pico-color-orange-550: #f56b3d;
+        --pico-color-orange-500: #f45d2c;
+        --pico-color-orange-450: #e74b1a;
+        --pico-color-orange-400: #d24317;
+        --pico-color-orange-350: #bd3c13;
+        --pico-color-orange-300: #a83410;
+        --pico-color-orange-250: #942d0d;
+        --pico-color-orange-200: #7f270b;
+        --pico-color-orange-150: #6b220a;
+        --pico-color-orange-100: #561e0a;
+        --pico-color-orange-50: #411a0a;
+        --pico-color-orange: #e0582f;
+        }
+    }
+

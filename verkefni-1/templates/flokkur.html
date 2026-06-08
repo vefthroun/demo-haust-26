@@ -1,0 +1,19 @@
+{% include "header.html" %}
+
+<main class="container col-3">
+
+    {%for i in menu %}
+        {% if i['flokkur'] == tegund %} <!--Hér er borið saman @route/request ´tegund´ == menu listinn-->
+        <div>
+            <h3>{{ i['nafn'] }}, {{i['flokkur']}}</h3>
+            <a href="{{ url_for('pizza', id=i['id']) }}">
+                <img src="{{ url_for('static', filename='images/'+i['mynd']) }}" title="{{ i.nafn }}">
+            </a>
+            <h4>verð: {{ i['verd'] }} kr.-</h4>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+</main>
+
+{% include "footer.html" %}

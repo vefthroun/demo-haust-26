@@ -1,0 +1,24 @@
+<li>
+    <a href="{{ url_for('index') }}" 
+        class="{{ 'link-active' if request.path == url_for('index') }}">
+    <span class="icon-home"> 
+    </a>
+</li>
+<li>
+    <a href="{{ url_for('flokkur', tegund='sterk') }}" 
+        class="{{ 'link-active' if request.path == url_for('flokkur', tegund='sterk') }}">
+    <span class="icon-pacman"></span> Sterk
+    </a>
+</li>
+<li>
+    <a href="{{ url_for('flokkur', tegund='vegan') }}" 
+        class="{{ 'link-active' if request.path == url_for('flokkur', tegund='vegan')  }}">
+    <span class="icon-pacman"></span> Vegan
+    </a>
+</li>
+<li>
+    <a href="{{ url_for('flokkur', tegund='keto') }}" 
+        class="{{ 'link-active' if request.path == url_for('flokkur', tegund='keto')  }}">
+    <span class="icon-pacman"></span> Kjöt
+    </a>        
+</li>

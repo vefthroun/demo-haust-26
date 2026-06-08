@@ -1,0 +1,135 @@
+/* animista kvikun */
+
+.swirl-in-fwd{animation:swirl-in-fwd .6s ease-out both}
+
+@keyframes swirl-in-fwd{
+    0%{transform:rotate(-540deg) scale(0);opacity:0}
+    100%{transform:rotate(0) scale(1);opacity:1}}
+
+.shake-bottom:active {
+    animation:shake-bottom 1s cubic-bezier(.455,.03,.515,.955) both
+}
+@keyframes shake-bottom{
+    0%,100% {
+        transform:rotate(0deg);
+        transform-origin:50% 100%}
+    10%{transform:rotate(2deg)}
+    20%,40%,60%{transform:rotate(-4deg)}
+    30%,50%,70%{transform:rotate(4deg)}
+    80%{transform:rotate(-2deg)}
+    90%{transform:rotate(2deg)}
+}
+
+/* tilkynning */
+.box {
+    position: absolute;
+    top: 6rem;
+    width: 100%;
+    height: 3rem;
+    overflow: hidden;
+    z-index: 3;
+    /*background-color: var(--pico-color-orange-50);*/
+}
+/* borðinn */
+.kvikun {
+    position: absolute;
+    width: 600px;
+    font-size: 2rem;
+    font-style: italic;
+    color: #fff; /*var(--pico-color);*/
+
+    animation-name: tilkynning;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function:ease-in-out;
+    z-index: 4;
+}
+@keyframes  tilkynning {
+    from {
+        left: 700px;
+    }
+    to {
+        left: -600px;
+    }
+}
+@media screen and (min-width: 768px){
+    @keyframes  tilkynning {
+        from {
+            left: 800px;
+        }
+        to {
+            left: -600px;
+        }
+    }
+}
+@media screen and (min-width: 1024px){
+    .kvikun {
+        width: 1000px;
+    }
+    @keyframes  tilkynning {
+        from {
+            left: 1480px;
+        }
+        to {
+            left: -800px;
+        }
+    }
+}
+@media screen and (min-width: 1600px){
+
+    @keyframes  tilkynning {
+        from {
+            left: 2000px;
+        }
+        to {
+            left: -800px;
+        }
+    }
+}
+
+/* slideshow no 6. Opacity*/
+
+#slideset6 {
+    height: 300px; 
+    position: relative;
+}
+
+#slideset6 > * {
+    animation-duration: 16s;
+    animation-name: autoplay6;
+    animation-iteration-count: infinite;
+    animation-direction: linear;
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    opacity: 0.0
+}
+
+@keyframes autoplay6 {
+  0% {opacity: 0.0}
+  4% {opacity: 1.0}
+  33.33% {opacity: 1.0}
+  37.33% {opacity: 0.0}
+  100% {opacity: 0.0}
+}
+
+#slideset6 > *:nth-child(1) {animation-delay: 0s}
+#slideset6 > *:nth-child(2) {animation-delay: 4s}
+#slideset6 > *:nth-child(3) {animation-delay: 8s}
+#slideset6 > *:nth-child(4) {animation-delay: 12s}
+
+@media screen and (min-width:960px){
+    #slideset6 {
+    height: 400px; 
+    }
+}
+@media screen and (min-width:1280px){
+    #slideset6 {
+    height: 500px; 
+    }
+}
+@media screen and (min-width:1600px){
+    #slideset6 {
+    height: 600px; 
+    }
+}

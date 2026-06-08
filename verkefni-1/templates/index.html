@@ -1,0 +1,18 @@
+{% include "header.html" %}
+
+<main class="container col-3">
+  {% for pi in menu %}
+    <section>
+      <h3>{{ pi.nafn }}</h3>
+      <p>
+        <a href="{{ url_for('pizza', id=pi['id']) }} ">
+          <!-- þurfum að tilgreina möppuna 'images/' fyrir framan nafn á mynd og tengja við myndina með + ' -->
+          <img src="{{ url_for('static', filename='images/'+pi['mynd']) }}" title="{{ pi.nafn }}">
+        </a>
+      </p>
+      <h5>Verð: {{ pi.verd }}</h5>
+    </section>
+  {% endfor %}
+</main>
+
+{% include "footer.html" %}

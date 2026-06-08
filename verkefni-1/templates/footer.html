@@ -1,0 +1,54 @@
+<footer class="container col-2">
+      <ul>
+        {% include "topmenu.html" %}
+      </ul>
+    <dl>              <!--Description list -->
+      <dt>{{ co.company  }}</dt>
+        <dd>{{ co.email }}</dd>
+      <dt>Vefforritun</dt>
+        <dd>{{ co.school }}</dd>
+    </dl>
+  </footer>
+    <p class="center">&copy GJG. spönn 1, haust 2026.</p>
+    <!--spjallbox-->
+    <section class="chatbox">
+        <input type="checkbox" id="check">
+        <label for="check"><span class="icon-bubbles3"></span></label>
+        <div class="chat-content">
+            <p>Hvernig get ég aðstoðað þig?</p>
+            <form action="#" method="get">
+                <textarea placeholder="Skrifaðu skilaboð..." rows="5"></textarea>
+                <div><input type="text" name="name" required placeholder="Nafn"></div>
+                <div><input type="email" name="email" required placeholder="Tölvupóstfang"></div>
+                <button type="submit" class="shake-bottom">Senda skilaboð</button>
+            </form>
+        </div>
+    </section>
+    <!-- Modal Dialog - login form -->
+    <dialog id="modal-example">
+      <article>
+        <header>
+          <button
+            aria-label="Close"
+            rel="prev"
+            data-target="modal-example"
+            onclick="toggleModal(event)"
+          ></button>
+        <h3>&nbsp;</h3>
+        <form action="admin.html" method="get">
+            <label>
+                Nafn:
+                <input type="text" placeholder="Name">
+            </label>
+            <label>
+                Tölvupóstfang:
+                <input type="email" required>
+            </label>
+            <input type="submit" value="Login / innskráning" class="shake-bottom">
+        </form>
+      </article>
+    </dialog>
+    
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+</body>
+</html>

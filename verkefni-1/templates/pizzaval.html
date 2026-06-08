@@ -1,0 +1,21 @@
+{% include "header.html" %}
+
+<main class="container col-2">
+    <div>
+        <h2>{{ pi.nafn }} ({{pi.flokkur}})</h2>
+        <h5>Verð: {{ pi.verd }}</h5>
+        <p>Innihald:<!--Hér er listi með álegginu þáttaður-->
+            <ol>
+                {% for i in pi.álegg %}
+                <li>{{ i }}</li>
+                {% endfor %}
+            </ol>
+        </p>
+    </div>
+    <div>
+        <!-- þurfum að klína 'images/' fyrir framan nafn á mynd ' -->
+        <img src="{{ url_for('static', filename='images/'+pi['mynd']) }}" title="{{ pi.nafn }}">
+    </div>
+</main>
+
+{% include "footer.html" %}

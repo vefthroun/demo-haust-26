@@ -1,0 +1,40 @@
+/* spjallbox */
+#check {
+    display: none;
+}
+.chatbox label {
+    display: block;
+    position: fixed;
+    right: 1rem;
+    bottom: 2rem;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--pico-background-color);
+    border: 1px solid var(--pico-primary);
+    border-radius: .4rem;
+    cursor: pointer;
+    z-index: 12;
+    text-align: center;
+    padding-top: .2rem;
+}
+.chatbox label:hover,
+.chatbox label:focus {
+    background-color: var(--pico-primary);
+}
+.chat-content {
+    position: fixed;
+    right: -22rem;
+    bottom: 4rem;
+    width: 20rem;
+    height: 26rem;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    background-color: var(--pico-background-color);
+    border-radius: .4rem;
+    transition: right 0.3s ease-in-out;
+    z-index: 9;
+}
+#check:checked ~ .chat-content {
+    right: 1rem;
+    transition: right 0.3s ease-in-out;
+}

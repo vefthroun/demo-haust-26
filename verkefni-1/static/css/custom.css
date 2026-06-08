@@ -1,0 +1,31 @@
+footer {
+    background-color: var(--pico-color-orange-50);
+    color: var(--pico-color);
+    border-top: 1px solid var(--pico-color-orange);
+}
+footer a {
+  text-decoration: none;
+}
+article h3 {
+    color:var(--pico-color-orange-550)
+}
+.logo {
+    font-size: 3rem;
+    color: var(--pico-color-orange);
+    padding-top: .5rem;
+}
+/* Attribute Selectors */
+
+.downloads a {
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  padding-left: 22px;
+  text-decoration: none;
+}
+
+.center {
+  text-align: center;
+}
+img {
+  border-radius: 16px;
+}
