@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <title>{% block title %}{% endblock %} - Verkefni 3.</title>
+    {% endblock %}
+</head>
+<body class="container">    
+    <header>
+        <h1>{% block header %}{% endblock %}</h1>
+    </header>
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+    <hr>
+    <footer>
+       <p>{% block footer %}{% endblock %}, Vefforitun 1. Vor 2025.</p> 
+    </footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% include "header.html" %}
+
+<main class="col-2">
+    <section>
+        <h3>Uppfærsla pósts hjá {{ user }}</h3>
+        <form action="/updatepost" method="post" class="container">
+            <table>
+                <tr>
+                    <th>    
+                        <input type="text" name="titill" required placeholder="titill" value="{{ post['titill'] }}">
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea name="skilabod" rows="4">{{- post['skilabod'] -}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <input type="hidden" name="post_id" value="{{ post['post_id'] }}"> <!-- id sent með-->
+                    <td><input type="submit" value="Uppfæra póst"></td>
+                </tr>
+            </table>
+        </form>
+     </section>
+      <!--section><!-- url for vísar í def form() í app.py -->
+        <!--form action="{{ url_for('create') }}" method="post" class="container">
+            <fieldset>
+                <legend>Skrá póst</legend>
+                <input type="text" name="title" required placeholder="titill">
+                <input type="text" name="message" required placeholder="skilaboð">
+                <input type="submit" value="Send">
+            </fieldset>
+        </form>
+    </section-->
+    <section>
+        <h4> <a href="/sign-out" class="button">Útskráning</a></h4>
+    </section>
+    <section>
+        
+    </section>
+</main>
+{% include "footer.html" %}

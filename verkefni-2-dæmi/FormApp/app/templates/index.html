@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} {% endblock %}
+{% block head %}
+{% endblock %}
+{% block header %}{{ title }} {% endblock %}
+{% block main %}
+    <h2>Upplýsingar um bók</h2>
+    <ul>
+        <li>Titill: {{ title }}</li>
+        <li>ISBN númer: {{ isbn }}</li>
+        <li>Höfundur: {{ author }}</li>
+        <li>Umfjöllun: {{ about }}</li>
+        <li>Tími skráningar: {{ timestamp }}</li>
+    </ul>
+{% endblock %}
+{% block footer %}Hér eru pistlarnir frá ritstjórn{% endblock %}

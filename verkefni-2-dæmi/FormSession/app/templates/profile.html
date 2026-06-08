@@ -1,0 +1,41 @@
+
+<!-- https://developer.mozilla.org/en-US/docs/Learn/Forms/Your_first_form -->
+<!-- Jinja inheritance: https://flask.palletsprojects.com/en/stable/patterns/templateinheritance/-->
+{% extends "base.html" %}
+{% block user %}{{ user['username'] }}´s Profile {% endblock %}
+{% block header %}Velkomin/n {{ user['username'] }}{% endblock %}
+{% block main %}
+  
+        <h3>{{ user["bio"] }}</h3>
+        <hr>
+        <p class="error">
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endwith %}
+        </p>  
+        <hr>
+        <form action="{{ url_for('blog') }}" method="post" class="container">
+            <fieldset>
+                <legend>Skráning bókar</legend>
+                <p>
+                    <label for="title">Titill</label>
+                    <input type="text" id="title" name="title">
+                </p>
+                <p>
+                    <label for="isbn">ISBN</label>
+                    <input type="text"  id="isbn" name="isbn">
+                </p>
+                <p>
+                    <label for="author">Höfundur</label>
+                    <input type="text"  id="author" name="author">
+                <p>
+                    <button type="submit">Submit</button>
+                </p>
+                <input type="hidden" id="timestamp" name="timestamp" value="Dagurinn í dag">
+            </fieldset>
+        </form>
+        <p> <a href="/sign-out">Sign out</a></p>
+{% endblock %}
+{% block footer %}{{ user['username'] }}, tölvupóstur {{ user["email"] }}. {% endblock %}

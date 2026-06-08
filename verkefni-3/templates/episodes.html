@@ -1,0 +1,22 @@
+{% include "header.html" %}
+
+<main class="col-2">
+    <section>
+        <h2>Season {{d[0]['season']}}</h2>
+        <ul> <!-- Sýnum alla þætti í seríu -->
+            <!--veljum einn þátt úr https://api.tvmaze.com/seasons/9032/episodes -->
+            {% for ep in d %}
+            <li>Episode: <a href="/seasons/{{ep['id']}}/episodes">
+                {{ep['number']}} - {{ep['name']}}</a></li>
+            {% endfor %}
+        </ul>
+        <p>Total episodes: {{d | length}}</p><!-- length er Jinja filter sem telur fjölda staka í lista-->
+        <p><a href="javascript:history.back()">Return to Seasons</a></p>
+        <p><a href="/">Return to the TW MAZE</a></p>
+    </section>
+    <section>
+        <img src="{{d[0]['image']['original']}}">
+        <p>{{ d[0]['summary'] | safe }}</p><!-- safe er Jinja filter sem túlkar html tög í streng-->
+    </section>
+</main>
+{% include "footer.html" %}

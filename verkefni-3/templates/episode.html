@@ -1,0 +1,15 @@
+{% include "header.html" %}
+<main class="col-2">
+    <section>
+        <h2>{{d[0]['name']}}</h2>
+        <h5>Episode {{d[0]['number']}}: {{d[0]['name']}}</h5>
+        <p>Aired on: {{d[0]['airdate']}}</p>    
+        <p>{{d[0]['summary']|safe}}</p>
+    </section>
+    <section>
+        <img src="{{d[0]['image']['medium']}}" alt="Image of {{d[0]['name']}}">
+    </section>
+    <p><a href="javascript:history.back()">Return to episodes</a></p>
+    <p><a href="/">Return to the TW MAZE</a></p>
+</main>
+{% include "footer.html" %}

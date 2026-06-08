@@ -1,0 +1,12 @@
+{% include "header.html" %}
+<main class="col-5">
+    {% for i in d %}
+        <div>
+            <h4>{{ i['show']['name'] }}</h4>
+            <a href="/shows/{{ i['show']['id'] }}">
+                <img src="{{ i['show']['image']['medium'] }}">
+            </a>
+        </div>
+    {% endfor %}
+
+{% include "footer.html" %}

@@ -1,0 +1,31 @@
+
+<!-- https://developer.mozilla.org/en-US/docs/Learn/Forms/Your_first_form -->
+<!-- Jinja inheritance: https://flask.palletsprojects.com/en/stable/patterns/templateinheritance/-->
+{% extends "base.html" %}
+{% block title %}Sign in form{% endblock %}
+{% block header %}Innskráning{% endblock %}
+{% block main %}
+<h5 class="error">
+  {% with messages = get_flashed_messages() %}
+      {% for message in messages %}
+          {{ message }}
+      {% endfor %}
+  {% endwith %}
+</h5>  
+<form action="/sign-in" method="POST">
+
+    <div>
+      <label>Username</label>
+      <input type="text" name="username">
+    </div>
+
+    <div>
+      <label>Password</label>
+      <input type="password" name="password">
+    </div>
+
+    <button type="submit">Sign in</button>
+
+  </form>
+{% endblock %}
+{% block footer %}Verkefni 3{% endblock %}

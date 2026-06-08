@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Signup form {% endblock %}
+{% block header %}Nýskráning {% endblock %}
+{% block main %}
+    <form action="/signup_process" method="post" class="container">
+        <fieldset>
+            <legend>Nýskráning (sign up)</legend>
+            <p>
+                <label for="name">Nafn:</label>
+                <input type="text" placeholder="skráðu fullt nafn / Full name please" id="name" name="user_name" required>
+            </p>
+            <p>
+                <label for="mail">Tölvupóstfang:</label>
+                <input type="email"  id="mail" name="user_email" required placeholder="Email">
+            </p>
+            <p>
+                <label for="password">Lykilorð:</label>
+                <input type="password" id="password" name="user_password" required placeholder="Password">
+            </p>
+            <p>
+                <label>
+                    <input type="checkbox" checked="checked" name="user_terms" style="margin-bottom:15px"> Samþykkja alla skilmála ...
+                </label>
+            </p>
+            <p>
+                <button type="submit">Nýskráning / Sign Up</button>
+            </p>
+        </fieldset>
+    </form>
+    {% endblock %}
+    {% block footer %}Nýskráning{% endblock %}

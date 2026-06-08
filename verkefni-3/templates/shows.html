@@ -1,0 +1,33 @@
+{% include "header.html" %}
+
+<main class="col-2">
+    <section>
+        <h1>{{d['name']}}</h1>
+        <h4>Rating: {{d['rating']['average']}}</h4>
+        <p>Premiered: {{d['premiered']}}. Ended: {{d['ended']}}</p>
+        <h3>Summary</h3>
+        <p>{{ d['summary'] | safe }}</p><!-- safe er Jinja filter sem túlkar html tög í streng-->
+        
+        <h3>Cast</h3>
+        <section class="col-3">
+            {% for actor in c %}
+            <div>
+                <img src="{{actor['person']['image']['medium']}}">
+                <p>{{actor['person']['name']}} as {{actor['character']['name']}}</p>
+            </div>
+            {% endfor %}
+        </section>
+    </section>
+    <section>
+        <p><img src="{{d['image']['original']}}"></p>
+        <h4>Seasons</h4>
+        <ul>
+            {% for season in s %}
+            <li><a href="/episodes/{{season['id']}}">
+                Season: {{season['number']}}, from {{season['premiereDate']}} to {{season['endDate']}}
+            </a></li>
+            {% endfor %}
+        </ul>
+    </section>
+</main>
+{% include "footer.html" %}

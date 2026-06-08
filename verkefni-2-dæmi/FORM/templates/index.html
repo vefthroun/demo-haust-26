@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} {% endblock %}
+{% block head %}
+  {{ super() }}
+    <style>
+        table {
+            border-collapse: collapse;
+            max-width: 48rem;
+            margin: auto;
+        }
+        th, td {
+            border-bottom: 1px solid black;
+        }
+        tfoot td{
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block header %}Forsíðan - Signup result {% endblock %}
+{% block main %}
+
+{% endblock %}
+{% block footer %}Niðurstaða skráningar{% endblock %}

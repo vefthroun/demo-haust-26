@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Signup form {% endblock %}
+{% block header %}Nýskráning {% endblock %}
+{% block main %}
+<h5 class="error">
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+{% endwith %}
+</h5>  
+<form action="{{ url_for('sign_up') }}" method="POST" novalidate><!--vafrinn sannreynir ekki innsláttarreiti-->
+    {{ sign.csrf_token }}
+    <p>
+    {{ sign.usname.label }}
+    {{ sign.usname }}
+    {% for error in sign.usname.errors %} 
+    <span class="error"> {{ error }}</span>
+    {% endfor %}
+    </p>
+    <p>
+    {{ sign.email.label }}
+    {{ sign.email }}
+    {% for error in sign.email.errors %} 
+    <span class="error"> {{ error }}</span>
+    {% endfor %}
+    </p>
+    <p>
+    {{ sign.psword.label }}
+    {{ sign.psword }}    
+    {% for error in sign.psword.errors %}
+    <span class="error">{{ error }}</span>
+    {% endfor %}
+
+    {{ sign.pscheck.label }}
+    {{ sign.pscheck }}
+    {% for error in sign.pscheck.errors %}
+    <span class="error">{{ error }}</span>
+    {% endfor %}
+    </p>
+    <p>{{ sign.submit() }}</p>
+</form>
+{% endblock %}
+{% block footer %}Nýskráning{% endblock %}
+
+    <!--h4 class="error">Verkefni 4</h4>
+    <form action="/signup_process" method="post" class="container">
+        <fieldset>
+            <legend>Nýskráning (sign up)</legend>
+            <p>
+                <label for="name">Nafn:</label>
+                <input type="text" placeholder="skráðu fullt nafn / Full name please" id="name" name="user_name" required>
+            </p>
+            <p>
+                <label for="mail">Tölvupóstfang:</label>
+                <input type="email"  id="mail" name="user_email" required placeholder="Email">
+            </p>
+            <p>
+                <label for="password">Lykilorð:</label>
+                <input type="password" id="password" name="user_password" required placeholder="Password">
+            </p>
+            <p>
+                <label>
+                    <input type="checkbox" checked="checked" name="user_terms" style="margin-bottom:15px"> Samþykkja alla skilmála ...
+                </label>
+            </p>
+            <p>
+                <button type="submit">Nýskráning / Sign Up</button>
+            </p>
+        </fieldset>
+    </form-->

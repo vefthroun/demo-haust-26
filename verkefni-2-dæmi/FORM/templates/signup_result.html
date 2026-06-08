@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Signup result {% endblock %}
+{% block head %}
+  {{ super() }}
+    <style>
+        table {
+            border-collapse: collapse;
+            max-width: 48rem;
+            margin: auto;
+        }
+        th, td {
+            border-bottom: 1px solid black;
+        }
+        tfoot td{
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block header %}Signup result {% endblock %}
+{% block main %}
+    <table>
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for key, value in result.items() %}
+           <tr>
+              <th> {{ key }} </th>
+              <td> {{ value }} </td>
+           </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <td colspan="2">VEFÞ2VF 2025</td>
+        </tfoot>
+     </table>
+{% endblock %}
+{% block footer %}Niðurstaða skráningar{% endblock %}

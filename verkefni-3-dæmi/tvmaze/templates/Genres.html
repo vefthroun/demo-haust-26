@@ -1,0 +1,21 @@
+{% extends "base.html"%}
+
+{% block titill %}
+    {{fl}}
+{% endblock %}
+
+{% block content %}
+<div class="dalkar">
+{%for i in d%}
+    {%if fl in i["genres"]%}
+    <div>
+    <ul>
+        <a href="/shows/{{ i['id'] }}">{{i["name"]}}</a><br>
+        <img src="{{i['image']['medium']}}">
+    </ul>
+    </div>
+    {%endif%}
+{%endfor%}
+</div>
+
+{% endblock %}

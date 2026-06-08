@@ -1,0 +1,18 @@
+{% extends "base.html"%}
+
+{% block titill %}
+    Þáttaryfirlit
+{% endblock %}
+
+{% block content %}
+<div class="dalkar">
+    {% for i in l%}
+    <div>
+        <ul>
+            <a href="/shows/{{ i['id'] }}">{{i["name"]}}</a><br>
+            <img src="{{i['image']['medium']}}">
+        </ul>
+    </div>
+    {%endfor%}
+</div>
+{% endblock %}

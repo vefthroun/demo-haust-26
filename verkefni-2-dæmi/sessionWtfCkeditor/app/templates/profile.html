@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+{% block user %}{{ user['username'] }}´s Profile {% endblock %}
+{% block header %}Velkomin/n {{ user['username'] }}{% endblock %}
+{% block main %}
+        <h3>{{ user["bio"] }}</h3>
+        <hr>
+        <p class="error">
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endwith %}
+        </p>  
+        <hr>
+        <form action="{{ url_for('blog') }}" method="POST"><!-- = vafri sannreynir ekki innsláttarreiti-->
+            {{ form.csrf_token }}
+            <fieldset>
+                <legend>{{title}}</legend>
+            <p>
+                {{ form.titill.label }}
+                {{ form.titill }}
+                {% for error in form.titill.errors %} 
+                <span class="error"> {{ error }}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.isbn.label }}
+                {{ form.isbn }}
+                {% for error in form.isbn.errors %} 
+                <span class="error"> {{ error }}</span>
+                {% endfor %}  
+            </p>
+            <p>
+                {{ form.lysing.label }}
+                {{ form.lysing }}
+                {{ ckeditor.load(pkg_type="basic") }}
+                {{ ckeditor.config(name='lysing') }}  <!--  field til að setja editorinn -->
+            </p>
+            <p>
+                {{ form.author.label }}
+                {{ form.author }}
+                {% for error in form.author.errors %} 
+                <span class="error"> {{ error }}</span>
+                {% endfor %}  
+            </p>
+            <!--input type="hidden" id="timestamp" name="timestamp" value="Dagurinn í dag"-->
+            <p>{{ form.submit() }}</p>
+            </fieldset>
+        </form>
+        <p> <a href="/sign-out">Útskráning</a></p>
+{% endblock %}
+{% block footer %}{{ user['username'] }}, tölvupóstur {{ user["email"] }}. {% endblock %}

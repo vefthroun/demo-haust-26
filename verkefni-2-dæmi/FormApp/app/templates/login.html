@@ -1,0 +1,25 @@
+
+<!-- https://developer.mozilla.org/en-US/docs/Learn/Forms/Your_first_form -->
+<!-- Jinja inheritance: https://flask.palletsprojects.com/en/stable/patterns/templateinheritance/-->
+{% extends "base.html" %}
+{% block title %}Login form {% endblock %}
+{% block header %}Innskráning{% endblock %}
+{% block main %}
+    <form action="/login_process" method="post" class="container">
+        <fieldset>
+            <legend>Innskráning</legend>
+            <p>
+                <label for="name">Nafn:</label>
+                <input type="text" id="name" name="user_name" required>
+            </p>
+            <p>
+                <label for="mail">Tölvupóstfang:</label>
+                <input type="email" id="mail" name="user_email" required>
+            </p>
+            <p>
+                <input type="submit" value="Submit">
+            </p>
+        </fieldset>
+    </form>
+{% endblock %}
+{% block footer %}Verkefni 3{% endblock %}

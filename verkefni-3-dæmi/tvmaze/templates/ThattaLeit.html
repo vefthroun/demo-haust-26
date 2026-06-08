@@ -1,0 +1,18 @@
+{% extends "base.html"%}
+
+{% block titill %}
+    ÞattaLeit
+{% endblock %}
+
+{% block content %}
+<div class="dalkar">
+{%for i in gogn%}
+    <div>
+        <ul>
+            <a href="/shows/{{ i['show']['id'] }}">{{i['show']['name']}}</a><br>
+            <img src="{{i['show']['image']['medium']}}">
+        </ul>
+    </div>
+{%endfor%}
+</div>
+{% endblock %}

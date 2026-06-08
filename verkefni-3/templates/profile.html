@@ -1,0 +1,43 @@
+{% include "header.html" %}
+
+<main class="col-2">
+      <section><!-- url for vísar í def form() í app.py -->
+        <form action="{{ url_for('create') }}" method="post" class="container">
+            <fieldset>
+                <legend>Nýskráning pósts</legend>
+                <input type="text" name="titill" required placeholder="titill">
+                <textarea name="skilabod" rows="4" required placeholder="skilaboð"></textarea><!--ATH! ekki hafa bil eða linubil í textarea-->
+                <input type="submit" value="Senda inn póst">
+            </fieldset>
+        </form>
+        <hr>
+        <h5>{{ user["username"] }} - {{ user["bio"] }} <a href="/sign-out" class="button">Útskráning</a></h5>
+    </section>
+    <section>
+        Póstar í Tinydb
+        <table>
+            </tr>
+            {% for p in posts %}
+            <tr>
+                <td>
+                    <h4>{{ p['titill'] }}</h4>
+                            {{ p['skilabod'] | safe}}
+                </td>
+            </tr>
+            <tr>
+                <td>Dagsetning: {{ p['timestamp'] }}.  Skráð af {{ p['username'] }}</td>
+            </tr>
+            <tr>
+                <td><a href="/update/{{ p['post_id'] }}" class="button">Uppfæra</a> &nbsp;
+                <a href="/delete/{{ p['post_id'] }}" class="error-button">Eyða</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <section>
+    </section>
+    <section>
+        
+    </section>
+</main>
+{% include "footer.html" %}

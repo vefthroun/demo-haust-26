@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Bókaskráning{% endblock %}
+{% block header %}{{ title }}{% endblock %}
+{% block main %}
+    <h2>Upplýsingar um bók</h2>
+    <ul>
+        <li>titill: {{ title }}</li>
+        <li>isbn: {{ isbn }}</li>
+        <li>höfundur: {{ author }}</li>
+        <li>tími skráningar: {{ timestamp }}</li>
+    </ul>
+{% endblock %}
+{% block footer %}{{ author }}{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html"%}
+
+{% block titill %}
+    {{d["name"]}}
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>Name: {{d["name"]}}</h1>
+    <img src="{{d['image']['medium']}}">
+    <h4>Premiered: {{d["premiered"]}}</h4>
+    <h4>Ended: {{d["ended"]}}</h4>
+    <h3>Show Summary</h3>
+    <!--
+    {%set summary = d["summary"].replace('</p>',"").replace('<p>',"").replace('<i>',"").replace('</i>',"").replace('<br>',"").replace('<b>',"").replace('</b>',"")%}
+    -->
+    <p>{{ d['summary'] | safe}}</p>
+    <h4><a href="/episodes/{{d[id]}}">Þættir</a> </h4>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Bókaskráning{% endblock %}
+{% block header %}{{ title }}{% endblock %}
+{% block main %}
+    <p class="error">
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endwith %}</p>
+    {% for item in session['blogg'] %}
+        <section>
+        Titill:
+        <h2>{{ item["title"] }}</h2>
+        
+        <p>ISBN: {{ item["isbn"] | safe }}</p>
+        
+        <p>Höfundur: {{ item["author"] | safe }}</p>
+        
+        <p>Skráð af: {{ item["author"] }}  | {{ item["timestamp"] }}</p>
+        </section>
+    {% endfor %}
+
+{% endblock %}
+
+{% block footer %} {{ title }} {% endblock %}

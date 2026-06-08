@@ -1,0 +1,50 @@
+
+<!-- https://developer.mozilla.org/en-US/docs/Learn/Forms/Your_first_form -->
+<!-- Jinja inheritance: https://flask.palletsprojects.com/en/stable/patterns/templateinheritance/-->
+{% extends "base.html" %}
+{% block title %}Sign in form{% endblock %}
+{% block header %}Innskráning{% endblock %}
+{% block main %}
+<h5 class="error">
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+{% endwith %}
+</h5>  
+<form action="/sign-in" method="POST" novalidate><!-- = vafri sannreynir ekki innsláttarreiti-->
+    {{ form.csrf_token }}
+    <p>
+    {{ form.username.label }}
+    {{ form.username(size=32) }}
+    {% for error in form.username.errors %} 
+    <span class="error"> {{ error }}</span>
+    {% endfor %}
+    </p>
+    <p>
+    {{ form.password.label }}
+    {{ form.password(size=32) }}
+    {% for error in form.password.errors %}
+    <span class="error">{{ error }}</span>
+    {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
+{% block footer %}Verkefni 3{% endblock %}
+
+<!--
+    <div>
+      <label>Username</label>
+      <input type="text" name="username" required>
+    </div>
+
+    <div>
+      <label>Password</label>
+      <input type="password" name="password" required>
+    </div>
+
+    <button type="submit">Sign in</button>
+
+  </form>
+-->
