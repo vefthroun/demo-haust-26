@@ -1,7 +1,16 @@
 {% include "header.html" %}
 
 <main class="container">
-
+	<h1>Listi yfir nemendur</h1>
+	<ul>
+		{% for id, info in nemendur.items() %}
+			<li>
+				<strong>{{ info.nafn }}</strong> - {{ info.netfang }} 
+				<!-- Hægt er að búa til tengil á nánari upplýsingar með ID -->
+				<a href="{{ url_for('view_student', id=id) }}">Skoða</a>
+			</li>
+		{% endfor %}
+	</ul>
 </main>
 
 {% include "footer.html" %}

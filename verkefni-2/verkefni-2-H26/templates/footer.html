@@ -1,0 +1,31 @@
+<footer class="container">
+      <p class="center">&copy GJG. spönn 1, haust 2026.</p>
+  </footer>
+    <!-- Modal Dialog - login form -->
+    <dialog id="modal-example">
+      <article>
+        <header>
+          <button
+            aria-label="Close"
+            rel="prev"
+            data-target="modal-example"
+            onclick="toggleModal(event)"
+          ></button>
+        <h3>&nbsp;</h3>
+        <form action="admin.html" method="get">
+            <label>
+                Nafn:
+                <input type="text" placeholder="Name">
+            </label>
+            <label>
+                Tölvupóstfang:
+                <input type="email" required>
+            </label>
+            <input type="submit" value="Login / innskráning" class="shake-bottom">
+        </form>
+      </article>
+    </dialog>
+    
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+</body>
+</html>

@@ -12,8 +12,9 @@ nemendur = {
 
 @app.route('/')
 def index():
+    title = "Forsíða"
     # Birtir alla nemendur úr orðasafninu
-    return render_template('index.html', nemendur=nemendur)
+    return render_template('index.html', nemendur=nemendur, title=title)
 
 @app.route('/nemandi/<id>')
 def view_student(id):
@@ -57,4 +58,13 @@ def delete(id):
     if id in nemendur:
         nemendur.pop(id)
     return redirect(url_for('index'))
+
+# 404 villa
+@app.errorhandler(404)
+def error(x):
+    title = '404 - villa, röng vefslóð'
+    return render_template('error-404.html', title=title)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
