@@ -12,14 +12,22 @@
     {% endif %}
     <link rel="stylesheet" href="{{url_for('static', filename='pico.indigo.min.css')}}">
     <link rel="icon" type="image/svg" href="/static/images/Glogo.svg">
+    <style>
+      .center {
+        text-align: center;
+      }
+      .flashes {
+        color:red;
+        font-weight: 600;
+      }
+    </style>
 </head>
 <body>
   <nav class="container">
-    <ul class="topmenu">
-      {% include "topmenu.html" %}
-      <li><a href="#" data-target="modal-example" onclick="toggleModal(event)">
-          <span class="icon-Logo-200">Innskráning</a>
-      </li>
+    <ul>
+		<li><a href="{{ url_for('index') }}">Forsíða</a></li>
+    	<li><a href="{{ url_for('create') }}">Nýskráning</a></li>
+    	<li><a href="#" data-target="modal-example" onclick="toggleModal(event)">Innskráning</a></li>
     </ul>
   </nav>
   <header>

@@ -12,16 +12,10 @@
             onclick="toggleModal(event)"
           ></button>
         <h3>&nbsp;</h3>
-        <form action="admin.html" method="get">
-            <label>
-                Nafn:
-                <input type="text" placeholder="Name">
-            </label>
-            <label>
-                Tölvupóstfang:
-                <input type="email" required>
-            </label>
-            <input type="submit" value="Login / innskráning" class="shake-bottom">
+        <form action="/login" method="POST">
+            <label for="user_id">Sláðu inn nemenda-ID:</label>
+            <input type="text" id="user_id" name="user_id" required>
+            <button type="submit">Skrá inn</button>
         </form>
       </article>
     </dialog>
