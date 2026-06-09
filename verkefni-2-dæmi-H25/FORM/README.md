@@ -40,6 +40,95 @@ The [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.0.x/) extension provides y
 
 ---
 
+## CRUD
+
+Til að búa til CRUD (Create, Read, Update, Delete) virkni í Flask er algengt að nota **Python orðasöfn (dictionaries)** sem einfaldan gagnagrunn í minni. CRUD stendur fyrir hinar fjórar grunnaraðgerðir gagnavinnslu: að búa til, lesa, uppfæra og eyða gögnum.
+
+Hér er dæmi um hvernig má útfæra þetta í Flask:
+
+### 1. Uppsetning og gagnaskipan
+Fyrst þarf að flytja inn nauðsynleg söfn og skilgreina orðasafn til að geyma gögnin.
+
+```python
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
+
+# Einfaldur "gagnagrunnur" í minni
+nemendur = {
+    "1": {"nafn": "Jón Jónsson", "netfang": "jon@skoli.is"},
+    "2": {"nafn": "Anna Önnu", "netfang": "anna@skoli.is"}
+}
+```
+
+### 2. Read (Lesa)
+Notað til að birta lista yfir alla nemendur eða upplýsingar um einn ákveðinn.
+
+```python
+@app.route('/')
+def index():
+    # Birtir alla nemendur úr orðasafninu
+    return render_template('index.html', nemendur=nemendur)
+
+@app.route('/nemandi/<id>')
+def view_student(id):
+    # Sækir ákveðinn nemanda með lykli (key)
+    nemandi = nemendur.get(id)
+    return render_template('profile.html', nemandi=nemandi)
+```
+
+### 3. Create (Búa til)
+Hér er notað **POST** aðferðin til að taka á móti gögnum úr HTML-formi. Nýr hlutur er bætt við orðasafnið með því að skilgreina nýjan lykil.
+
+```python
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+    if request.method == 'POST':
+        # Sækir gögn úr formi
+        nytt_id = str(len(nemendur) + 1)
+        nafn = request.form.get('nafn')
+        netfang = request.form.get('netfang')
+        
+        # Bætir við í orðasafnið
+        nemendur[nytt_id] = {"nafn": nafn, "netfang": netfang}
+        return redirect(url_for('index'))
+    return render_template('create_form.html')
+```
+
+### 4. Update (Uppfæra)
+Til að uppfæra gögn er gildið á tilteknum lykli í orðasafninu endurskilgreint.
+
+```python
+@app.route('/update/<id>', methods=['GET', 'POST'])
+def update(id):
+    if request.method == 'POST':
+        # Uppfærir gildi nemanda
+        nemendur[id]['nafn'] = request.form.get('nafn')
+        nemendur[id]['netfang'] = request.form.get('netfang')
+        return redirect(url_for('index'))
+    
+    nemandi = nemendur.get(id)
+    return render_template('update_form.html', nemandi=nemandi, id=id)
+```
+
+### 5. Delete (Eyða)
+Nota má `pop()` aðferðina eða `del` skipunina til að fjarlægja færslu úr orðasafninu.
+
+```python
+@app.route('/delete/<id>')
+def delete(id):
+    # Fjarlægir nemanda með gefnu ID
+    if id in nemendur:
+        nemendur.pop(id)
+    return redirect(url_for('index'))
+```
+
+### Lykilatriði í útfærslunni:
+*   **Routing:** Notað er `@app.route` til að tengja föll við ákveðnar vefslóðir.
+*   **Request Object:** Gögnum úr formum er náð í gegnum `request.form`.
+*   **Dictionaries:** Orðasöfn eru notuð því þau eru **breytanleg (mutable)**, sem gerir okkur kleift að bæta við, breyta og eyða gögnum á auðveldan hátt.
+*   **HTTP Methods:** Mikilvægt er að skilgreina `methods=['POST']` fyrir leiðir sem breyta gögnum.
+
 ### 4. CKEditor (WYSIWYG HTML editor)
 
 WYSIWYG HTML editor has the ability to convert HTML text area fields or other HTML elements to editor instances. WYSIWYG is an acronym for "what you see is what you get."
