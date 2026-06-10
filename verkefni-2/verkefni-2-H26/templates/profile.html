@@ -1,5 +1,5 @@
 {% include "header.html" %}
-
+{{ ckeditor.load() }}
 <main class="container">
     <h2>Velkomin(n) {{ nemandi.nafn }}</h2>
     
@@ -24,6 +24,7 @@
 {% endwith %}
   <hr>
   <section>
+    <h3>Skrifa póst</h3>
     <form method="post">
     {{ ckeditor.create() }}
     <input type="submit" value="senda">

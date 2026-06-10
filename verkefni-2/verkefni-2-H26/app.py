@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, CKEditor
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_ckeditor import CKEditor
 
 app = Flask(__name__)
 
