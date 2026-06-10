@@ -117,12 +117,17 @@ def profile():
     return render_template('profile.html', nemandi=nemandi)
 
 
-# 404 villa
+# 400 villur
 
 @app.errorhandler(404)
-def error(x):
+def error4(x):
     title = '404 - villa, röng vefslóð'
-    return render_template('error-404.html', title=title)
+    return render_template('error-40x.html', title=title)
+
+@app.errorhandler(405)
+def error5(x):
+    title = '405 - aðgerð ekki leyfð'
+    return render_template('error-40x.html', title=title)
 
 if __name__ == '__main__':
     app.run(debug=True)

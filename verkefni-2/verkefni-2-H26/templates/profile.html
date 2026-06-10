@@ -7,11 +7,7 @@
         <p><strong>Nafn:</strong> {{ nemandi.nafn }}</p>
         <p><strong>Netfang:</strong> {{ nemandi.netfang }}</p>
     </div>
-    <hr>
-    <p><a href="{{ url_for('index') }}">Aftur á forsíðu</a></p>
-    <form action="{{ url_for('logout') }}">
-      <button type="submit">Útskráning</button>
-  </form>
+
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -30,6 +26,13 @@
     <input type="submit" value="senda">
 </form>
   </section>
-
+    <hr>
+    <div class="grid">
+      <p><a href="{{ url_for('index') }}">Aftur á forsíðu</a></p>
+      <form action="{{ url_for('logout') }}">
+        <button type="submit">Útskráning</button>
+    </form>
+  </div>
 </main>
+
 {% include "footer.html" %}
