@@ -1,7 +1,26 @@
 {% include "header.html" %}
-
+<header>
+    <h1 class="center"> {{ title }}</h1>
+</header>
 <main class="container">
-	<h2>Listi yfir nemendur</h2>
+
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class="flashes">
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	{% endwith %}
+
+	{% for id, post in skilabod.items() %}
+		<h4>{{ post.fyrirsogn }}</h4>
+		<p>{{ post.postur }} </p>
+	{% endfor %}
+
+	<hr>
+	<h4>Listi yfir nemendur</h4>
 	<ul>
 		{% for id, info in nemendur.items() %}
 			<li>
@@ -11,16 +30,5 @@
 			</li>
 		{% endfor %}
 	</ul>
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class="flashes">
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-
 </main>
 {% include "footer.html" %}

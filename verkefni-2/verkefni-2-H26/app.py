@@ -3,25 +3,31 @@ from flask_ckeditor import CKEditor
 
 app = Flask(__name__)
 
-app.secret_key = 'Þess1_lyki11_Er_3rf1ður!' # Nauðsynlegt fyrir session
+app.secret_key = 'Þe551_lyki11_Er_3rf1ður!' # Nauðsynlegt fyrir session
 
 # CKEditor
 app.config['CKEDITOR_PKG_TYPE'] = 'basic'
 ckeditor = CKEditor(app)
 
-# Einfaldur "gagnagrunnur" í minni
+# Einfaldur "gagnagrunnur" í vinnsluminni (cache) 
 nemendur = {
     "1": {"nafn": "Jón Jónsson", "netfang": "jon@skoli.is"},
     "2": {"nafn": "Anna Önnudóttir", "netfang": "anna@skoli.is"}
+}
+skilabod = {
+    "1": {"fyrirsogn": "Klúbbastarfið byrjað", "postur": "Þetta eru fyrstu skilaboðin í skjóðunni" },
+    "2": {"fyrirsogn": "Hvað er á dagsskrá? ", "postur": "Nú er þetta allt að smella saman 😉​" }
 }
 
 # Read
 
 @app.route('/')
 def index():
-    title = "Forsíða"
-    # Birtir alla nemendur úr orðasafninu
-    return render_template('index.html', nemendur=nemendur, title=title)
+    title = "Skilaboðaskjóðan"
+    # Birtir alla nemendur úr orðasafninu og skilaboð
+    return render_template('index.html', nemendur=nemendur, skilabod=skilabod, title=title)
+
+# finnum nemanda eftir id og sendum á profile.html
 
 @app.route('/nemandi/<id>')
 def view_student(id):
@@ -29,13 +35,13 @@ def view_student(id):
     nemandi = nemendur.get(id)
     return render_template('profile.html', nemandi=nemandi)
 
-# Create
+# Create (nemanda í nemendur)
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
         # Sækir gögn úr formi
-        nytt_id = str(len(nemendur) + 1)
+        nytt_id = str(len(nemendur) + 1) #nýtt id búið til + 1
         nafn = request.form.get('nafn')
         netfang = request.form.get('netfang')
         
@@ -102,6 +108,7 @@ def logout():
 
 @app.route('/profile')
 def profile():
+    title = "Prófíllinn þinn"
     # 1. Athuga hvort notandi sé skráður inn í session
     user_id = session.get('user_id')
     
