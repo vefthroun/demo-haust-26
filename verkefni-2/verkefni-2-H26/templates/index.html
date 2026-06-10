@@ -11,7 +11,7 @@
 			</li>
 		{% endfor %}
 	</ul>
-</main>
+
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class="flashes">
@@ -21,4 +21,6 @@
     </ul>
   {% endif %}
 {% endwith %}
+
+</main>
 {% include "footer.html" %}

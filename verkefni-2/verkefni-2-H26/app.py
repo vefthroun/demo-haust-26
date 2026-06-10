@@ -76,7 +76,7 @@ def profile():
     
     # 3. Sækja gögn nemandans og birta síðuna
     nemandi = nemendur[user_id]
-    flash(f'Nemandinn {nemandi} hefur verið skráður!')
+    #flash(f'Nemandinn {nemandi} hefur verið skráður!')
     return render_template('profile.html', nemandi=nemandi)
 
 # login

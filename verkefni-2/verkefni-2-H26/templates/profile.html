@@ -12,7 +12,7 @@
     <form action="{{ url_for('logout') }}">
       <button type="submit">Útskráning</button>
   </form>
-</main>
+
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class="flashes">
@@ -22,4 +22,6 @@
     </ul>
   {% endif %}
 {% endwith %}
+
+</main>
 {% include "footer.html" %}
