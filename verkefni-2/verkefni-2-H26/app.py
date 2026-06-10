@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, CKEditor
 
 app = Flask(__name__)
 
 app.secret_key = 'Þess1_lyki11_Er_3rf1ður!' # Nauðsynlegt fyrir session
+
+# CKEditor
+app.config['CKEDITOR_PKG_TYPE'] = 'basic'
+ckeditor = CKEditor(app)
 
 # Einfaldur "gagnagrunnur" í minni
 nemendur = {
@@ -61,26 +65,6 @@ def delete(id):
         nemendur.pop(id)
     return redirect(url_for('index'))
 
-# Profile
-
-@app.route('/profile')
-def profile():
-    # 1. Athuga hvort notandi sé skráður inn í session
-    user_id = session.get('user_id')
-    
-    # 2. Athuga hvort user_id sé í nemendalistanum
-    if not user_id or user_id not in nemendur:
-        # Ef ekki, senda notanda á forsíðu (aðgangur lokaður)
-        flash('Þú ert ekki skráður í vefáfangann')
-        return redirect(url_for('index'))
-    
-    # 3. Sækja gögn nemandans og birta síðuna
-    nemandi = nemendur[user_id]
-    #flash(f'Nemandinn {nemandi} hefur verið skráður!')
-    return render_template('profile.html', nemandi=nemandi)
-
-# login
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -112,6 +96,25 @@ def logout():
     
     # Senda notanda aftur á forsíðu eða innskráningarsíðu
     return redirect(url_for('index'))
+
+# Profile
+
+@app.route('/profile')
+def profile():
+    # 1. Athuga hvort notandi sé skráður inn í session
+    user_id = session.get('user_id')
+    
+    # 2. Athuga hvort user_id sé í nemendalistanum
+    if not user_id or user_id not in nemendur:
+        # Ef ekki, senda notanda á forsíðu (aðgangur lokaður)
+        flash('Þú ert ekki skráður í vefáfangann')
+        return redirect(url_for('index'))
+    
+    # 3. Sækja gögn nemandans og birta síðuna
+    nemandi = nemendur[user_id]
+    #flash(f'Nemandinn {nemandi} hefur verið skráður!')
+    return render_template('profile.html', nemandi=nemandi)
+
 
 # 404 villa
 
