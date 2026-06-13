@@ -5,6 +5,8 @@
 	<form method="POST">
 		<input type="text" name="nafn" placeholder="Nafn nemanda">
 		<input type="email" name="netfang" placeholder="Netfang">
+    <input type="password" name="psw" placeholder="Lykilorð">
+    <input type="password" name="psw" placeholder="Lykilorð endurtekið">
 		<button type="submit">Vista</button>
 	</form>
 </main>
@@ -17,4 +19,5 @@
     </ul>
   {% endif %}
 {% endwith %}
+<p class="flashes">Lykilorð verður útfært í 3. verkefni</p>
 {% include "footer.html" %}

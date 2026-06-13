@@ -14,19 +14,14 @@
 	{% endif %}
 	{% endwith %}
 
-	{% for id, post in skilabod.items() %}
-		<h4>{{ post.fyrirsogn }}</h4>
-		<p>{{ post.postur }} </p>
-	{% endfor %}
-
-	<hr>
 	<h4>Listi yfir nemendur</h4>
 	<ul>
 		{% for id, info in nemendur.items() %}
 			<li>
 				<strong>{{ info.nafn }}</strong> - {{ info.netfang }} 
 				<!-- Hægt er að búa til tengil á nánari upplýsingar með ID -->
-				<!--a href="{{ url_for('view_student', id=id) }}">Skoða</a-->
+				<a href="{{ url_for('view_student', id=id) }}" type="button">Skoða</a>
+				<a href="{{ url_for('delete', id=id) }}" type="button">Eyða</a>
 			</li>
 		{% endfor %}
 	</ul>

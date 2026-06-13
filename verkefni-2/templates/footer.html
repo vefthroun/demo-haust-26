@@ -1,0 +1,43 @@
+<footer class="container">
+      <p class="center">&copy <a href="#" data-target="modal-admin" onclick="toggleModal(event)">GJG</a>. VEFÞ2VF, spönn 1, haust 2026.</p>
+      <li></li>
+  </footer>
+    <!-- Modal Dialog - login form for students-->
+    <dialog id="modal-example">
+      <article>
+        <header>
+          <button
+            aria-label="Close"
+            rel="prev"
+            data-target="modal-example"
+            onclick="toggleModal(event)"
+          ></button>
+        <h3>&nbsp;</h3>
+        <form action="/login" method="POST">
+            <label for="user_id">Sláðu inn nemenda-ID:</label>
+            <input type="text" id="user_id" name="user_id" required>
+            <button type="submit">Skrá inn</button>
+        </form>
+      </article>
+    </dialog>
+        <!-- Modal Dialog - login form for students-->
+    <dialog id="modal-admin">
+      <article>
+        <header>
+          <button
+            aria-label="Close"
+            rel="prev"
+            data-target="modal-admin"
+            onclick="toggleModalexample(event)"
+          ></button>
+        <h3>&nbsp;</h3>
+        <form action="/admin" method="POST">
+            <label for="admin_id">Sláðu inn admin-ID:</label>
+            <input type="text" id="admin-ID" name="admin_id" required>
+            <button type="submit">Skrá inn</button>
+        </form>
+      </article>
+    </dialog>
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+</body>
+</html>

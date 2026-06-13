@@ -1,0 +1,25 @@
+{% include "header.html" %}
+<header>
+    <h1 class="center"> {{ title }}</h1>
+</header>
+<main class="container">
+
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class="flashes">
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	{% endwith %}
+	<p>Hér birtast skilaboð frá klúbbmeðlimum</p>
+	{% for id, post in skilabod.items() %}
+		<h4>{{ post.fyrirsogn }}</h4>
+		<p>{{ post.postur }} </p>
+		<p><em>{{ post.hofundur }}</em></p>
+		<hr>
+	{% endfor %}
+
+</main>
+{% include "footer.html" %}
