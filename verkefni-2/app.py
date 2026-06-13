@@ -42,15 +42,6 @@ def view_student(id):
     nemandi = nemendur.get(id)
     return render_template('profile.html', nemandi=nemandi)
 
-#@app.route('/admin/<id>')
-@app.route('/admin/<int:admin_id>')
-#def view_admin(id):
-def view_admin(admin_id):
-    # Sækir admin með lykli (key)
-    admin = administrator.get(id)
-    nemar = nemendur
-    return render_template('admin.html', nemendur=nemar, admin=admin)
-
 # Create 
 # (Nýskráning nemanda í klúbbinn)
 @app.route('/create', methods=['GET', 'POST'])
@@ -103,7 +94,7 @@ def delete(id):
     # Fjarlægir nemanda með gefnu ID
     if id in nemendur:
         nemendur.pop(id)
-    return redirect(url_for('view_admin'))
+    return redirect(url_for('get_admin'))
 
 # login
 
@@ -133,14 +124,14 @@ def get_admin():
         # Sækjum ID úr forminu með 'name' eigindinu
         admin_id = request.form.get('admin-id')
         #print(admin_id)
-        # Athugum hvort lykillinn sé til í administrator
+        # Athugum hvort id sé til í administrator
         if admin_id in administrator:
             # Geymum ID í session svo notandinn haldist innskráður á milli síðna
             session['admin_id'] = admin_id
-            #print(admin_id)
+            print(admin_id)
             flash('Velkominn Addi minn!')
-            #return redirect(url_for('view_admin'))
-            return redirect(url_for('view_admin', admin_id=admin_id))
+            nemar = nemendur # tökum með nemendur
+            return render_template('admin.html', nemendur=nemar)
         else:
             # Ef ID finnst ekki, gefum við endurgjöf
             flash('Villa: Rangt admin-ID.')
@@ -152,7 +143,9 @@ def get_admin():
 @app.route('/logout')
 def logout():
     # Fjarlægir user_id úr session ef það er til staðar
-    session.pop('user_id', None)
+    #session.pop('user_id', None)
+    #session.pop('admin_id', None)
+    session.clear()
     
     # endurgjöf
     flash('Þú hefur verið skráð(ur) út.')

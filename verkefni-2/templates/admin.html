@@ -3,7 +3,6 @@
     <h1 class="center"> {{ title }}</h1>
 </header>
 <main class="container">
-
 	{% with messages = get_flashed_messages() %}
 	{% if messages %}
 		<ul class="flashes">
@@ -14,16 +13,37 @@
 	{% endif %}
 	{% endwith %}
 	<h4>Listi yfir notendur</h4>
-	<ul>
-		<li><h4>{{admin.nafn}} kerfisstjóri- {{ admin.netfang }}</li>
-		{% for id, info in nemendur.items() %}
-			<li>
-				<strong>{{ info.nafn }}</strong> - {{ info.netfang }} 
-				<!-- Hægt er að búa til tengil á nánari upplýsingar með ID -->
-				<a href="{{ url_for('view_student', id=id) }}" type="button">Skoða</a>
+	<table>
+		<tr>
+			<th>Nemandi</th><th>Email</th><th>Info</th><th>Delete</th>
+		</tr>
+		{% for id, info in nemendur.items() %}			
+		<tr>
+			<td><strong>{{ info.nafn }}</strong></td>
+			<td>{{ info.netfang }} </td>
+			<td>	<!-- nánari upplýsingar með ID -->
+				<a href="{{ url_for('view_student', id=id) }}" type="button">Skoða</a> 
+			</td>
+			<td>
 				<a href="{{ url_for('delete', id=id) }}" type="button">Eyða</a>
-			</li>
+			</td>
+		</tr>
 		{% endfor %}
-	</ul>
+	</table>
+	<hr>
+	<!--h4>Listi yfir greinar -- tekið fyrir í verkefni 3</h4>
+	{# for id, post in skilabod.items() #}
+		<h4>{# post.fyrirsogn #}</h4>
+		<p>{# post.postur #} </p>
+		<p><em>{# post.hofundur #}</em></p>
+		<p><a href="{# url_for('delete', id=id) #}" type="button">Eyða</a></p>
+		<hr-->
+	{# endfor #}
+	<div class="grid">
+		<p><a href="{{ url_for('index') }}">Aftur á forsíðu</a></p>
+		<form action="{{ url_for('logout') }}">
+			<button type="submit">Útskráning</button>
+		</form>
+	</div>
 </main>
 {% include "footer.html" %}
