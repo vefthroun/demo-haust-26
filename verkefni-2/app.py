@@ -42,8 +42,10 @@ def view_student(id):
     nemandi = nemendur.get(id)
     return render_template('profile.html', nemandi=nemandi)
 
-@app.route('/admin/<id>')
-def view_admin(id):
+#@app.route('/admin/<id>')
+@app.route('/admin/<int:admin_id>')
+#def view_admin(id):
+def view_admin(admin_id):
     # Sækir admin með lykli (key)
     admin = administrator.get(id)
     nemar = nemendur
@@ -130,14 +132,15 @@ def get_admin():
     if request.method == 'POST':
         # Sækjum ID úr forminu með 'name' eigindinu
         admin_id = request.form.get('admin-id')
-        print(admin_id)
+        #print(admin_id)
         # Athugum hvort lykillinn sé til í administrator
         if admin_id in administrator:
             # Geymum ID í session svo notandinn haldist innskráður á milli síðna
             session['admin_id'] = admin_id
-            print(admin_id)
+            #print(admin_id)
             flash('Velkominn Addi minn!')
-            return redirect(url_for('view_admin'))
+            #return redirect(url_for('view_admin'))
+            return redirect(url_for('view_admin', admin_id=admin_id))
         else:
             # Ef ID finnst ekki, gefum við endurgjöf
             flash('Villa: Rangt admin-ID.')
