@@ -22,8 +22,8 @@ skilabod = {
           "postur": "Nú er þetta allt að smella saman 😉​", 
           "hofundur": "Anna Önnudóttir"}
 }
-admin = {
-    "1": {"admin": "Addiminn", "netfang": "admin@skoli.is"}
+administrator = {
+    "123": {"nafn": "Addiminn", "netfang": "addi@skoli.is"}
 }
 
 # Read
@@ -45,8 +45,9 @@ def view_student(id):
 @app.route('/admin/<id>')
 def view_admin(id):
     # Sækir admin með lykli (key)
-    admin = admin.get(id)
-    return render_template('admin.html', nemendur=nemendur)
+    admin = administrator.get(id)
+    nemar = nemendur
+    return render_template('admin.html', nemendur=nemar, admin=admin)
 
 # Create 
 # (Nýskráning nemanda í klúbbinn)
@@ -120,29 +121,28 @@ def login():
             # Ef ID finnst ekki, gefum við endurgjöf
             flash('Villa: Rangt nemenda-ID.')
             return redirect(url_for('index'))
-            
-    return render_template('index.html')
+    return render_template('index.html', skilabod=skilabod)
 
 # admin login
 
 @app.route('/admin', methods=['GET', 'POST'])
-def admin():
+def get_admin():
     if request.method == 'POST':
         # Sækjum ID úr forminu með 'name' eigindinu
-        admin_id = request.form.get('admin_id')
-        
-        # Athugum hvort lykillinn sé til í nemenda-dictionary
-        if admin_id in admin:
+        admin_id = request.form.get('admin-id')
+        print(admin_id)
+        # Athugum hvort lykillinn sé til í administrator
+        if admin_id in administrator:
             # Geymum ID í session svo notandinn haldist innskráður á milli síðna
             session['admin_id'] = admin_id
+            print(admin_id)
             flash('Velkominn Addi minn!')
             return redirect(url_for('view_admin'))
         else:
             # Ef ID finnst ekki, gefum við endurgjöf
             flash('Villa: Rangt admin-ID.')
             return redirect(url_for('index'))
-            
-    return render_template('index.html')
+    return render_template('index.html', skilabod=skilabod)
 
 # logout
 

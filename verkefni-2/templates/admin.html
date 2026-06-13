@@ -13,9 +13,9 @@
 		</ul>
 	{% endif %}
 	{% endwith %}
-
-	<h4>Listi yfir nemendur</h4>
+	<h4>Listi yfir notendur</h4>
 	<ul>
+		<li><h4>{{admin.nafn}} kerfisstjóri- {{ admin.netfang }}</li>
 		{% for id, info in nemendur.items() %}
 			<li>
 				<strong>{{ info.nafn }}</strong> - {{ info.netfang }} 
