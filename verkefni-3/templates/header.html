@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="is"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HTML og CSS grunnur">
+    <meta name="author" content="Guðmundur Jón Guðjónsson">
+    {% if title %}
+      <title>{{ title }}</title>
+      {% else %}
+      <title>Verkefni 2. Form & Sessions</title>
+    {% endif %}
+    <link rel="stylesheet" href="{{url_for('static', filename='pico.indigo.min.css')}}">
+    <link rel="icon" type="image/svg" href="/static/images/Glogo.svg">
+    <style>
+      .center {
+        text-align: center;
+      }
+      .flashes {
+        color:red;
+        font-weight: 600;
+      }
+    </style>
+</head>
+<body>
+  <nav class="container">
+    <ul>
+      <li><h5><a href="{{ url_for('index') }}">Klúbburinn</a></h5></li>
+    </ul>
+    <ul>
+        <li><a href="#" data-target="modal-example" onclick="toggleModal(event)">Innskráning</a></li>
+    	<li><a href="{{ url_for('create') }}">Nýskráning</a></li>
+		<li><a href="{{ url_for('profile') }}">Ritstjórn</a></li>
+    </ul>
+  </nav>
+   
