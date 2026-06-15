@@ -21,14 +21,11 @@
                 <article>
                     {# Birta innihald póstsins #}
                     <p>{{ post.content  | safe }}</p>
-                    
-                    <footer class="post-meta">
+                    <hr>
                         {# Birta notendanafn (höfund) og tímastimpil #}
                         <small>
-                            Sent af: <strong>{{ post.username }}</strong> 
-                            þann {{ post.timestamp }}
+                            Höfundur: <strong>{{ post.username }}</strong>. Dags: {{ post.timestamp }}
                         </small>
-                    </footer>
                 </article>
                 <hr>
             {% endfor %}

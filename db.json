@@ -1,0 +1,21 @@
+{
+  "users": {
+    "1": {
+      "username": "vefstjori",
+      "role": "admin",
+      "password": "psw_123"
+    },
+    "2": {
+      "username": "Jónas",
+      "role": "user",
+      "password": "psw_456"
+    }
+  },
+  "posts": {
+    "1": {
+      "author_id": 2,
+      "content": "Hæ öll! Þetta er minn fyrsti póstur.",
+      "timestamp": "2026-06-14"
+    }
+  }
+}

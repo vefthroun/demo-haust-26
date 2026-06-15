@@ -115,6 +115,19 @@ def delete(id):
 
 # login
 
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    # Hér myndir þú leita að notanda í users_table
+    user = users_table.get(User.username == username)
+    if user:
+        session['user_id'] = user.doc_id # doc_id er sjálfkrafa ID hjá TinyDB
+        session['role'] = user.get('role', 'user')
+        return redirect(url_for('profile'))
+    flash ('Innskráning mistókst, villa 401')
+    return redirect(url_for('error4'))
+
+'''
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -132,7 +145,7 @@ def login():
             flash('Villa: Rangt nemenda-ID.')
             return redirect(url_for('index'))
     return render_template('index.html', skilabod=skilabod)
-
+'''
 # admin login
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -165,7 +178,7 @@ def logout():
     session.clear()
     
     # endurgjöf
-    flash('Þú hefur verið skráð(ur) út.')
+    flash('Þú hefur verið útskráð(ur).')
     
     # Senda notanda aftur á forsíðu eða innskráningarsíðu
     return redirect(url_for('index'))
