@@ -1,18 +1,55 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from tinydb import TinyDB, Query
 
 app = Flask(__name__)
 
 app.secret_key = 'Þe551_lyki11_Er_3rf1ður!' # Nauðsynlegt fyrir session
 
+# tengja db við appið
+db = TinyDB('db.json', indent=2, encoding='utf-8', ensure_ascii=False)
+users_table = db.table('users')
+posts_table = db.table('posts')
+User = Query()
+Post = Query()
 
+# Einfaldur "gagnagrunnur" í vinnsluminni (cache) 
+nemendur = {
+    "1": {"nafn": "Jón Jónsson", "netfang": "jon@skoli.is"},
+    "2": {"nafn": "Anna Önnudóttir", "netfang": "anna@skoli.is"}
+}
+skilabod = {
+    "1": {"fyrirsogn": "Klúbbastarfið byrjað", 
+          "postur": "Þetta eru fyrstu skilaboðin í skjóðunni", 
+          "hofundur": "Jón Jónsson"},
+    "2": {"fyrirsogn": "Hvað er á dagsskrá? ", 
+          "postur": "Nú er þetta allt að smella saman 😉​", 
+          "hofundur": "Anna Önnudóttir"}
+}
+administrator = {
+    "123": {"nafn": "Addiminn", "netfang": "addi@skoli.is"}
+}
 
 # Read
 
 @app.route('/')
 def index():
     title = "Skilaboðaskjóðan"
-    # Birtir alla nemendur úr orðasafninu og skilaboð
-    return render_template('index.html', skilabod=skilabod, title=title)
+    all_posts = posts_table.all() # Sækir alla pósta
+
+    # 2. Tengja notendanafn við hvern póst
+    for post in all_posts:
+        # Flettum upp notanda eftir doc_id sem er geymt sem author_id [6, Conversation]
+        user = users_table.get(doc_id=post['author_id'])
+        if user:
+            # Bætum nýjum lykli við orðasafnið (dict) fyrir birtingu [20, Conversation]
+            post['username'] = user['username']
+        else:
+            post['username'] = "Óþekktur notandi"
+            
+    # 3. Raða póstum eftir tíma (valfrjálst en mælt með) [3]
+    # all_posts.sort(key=lambda x: x['timestamp'], reverse=True)
+
+    return render_template('index.html', posts=all_posts, title=title)
 
 # finnum nemanda eftir id og sendum á profile.html
 
@@ -151,6 +188,10 @@ def profile():
     nemandi = nemendur[user_id]
     #flash(f'Nemandinn {nemandi} hefur verið skráður!')
     return render_template('profile.html', nemandi=nemandi)
+
+# tv shows 
+
+
 
 # 400 villur
 

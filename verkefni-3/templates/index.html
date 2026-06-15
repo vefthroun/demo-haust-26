@@ -1,4 +1,5 @@
 {% include "header.html" %}
+
 <header>
     <h1 class="center"> {{ title }}</h1>
 </header>
@@ -13,12 +14,28 @@
 		</ul>
 	{% endif %}
 	{% endwith %}
-	{% for id, post in skilabod.items() %}
-		<h4>{{ post.fyrirsogn }}</h4>
-		<p>{{ post.postur }} </p>
-		<p><em>{{ post.hofundur }}</em></p>
-		<hr>
-	{% endfor %}
+
+    <div>
+        {% if posts %}
+            {% for post in posts %}
+                <article>
+                    {# Birta innihald póstsins #}
+                    <p>{{ post.content  | safe }}</p>
+                    
+                    <footer class="post-meta">
+                        {# Birta notendanafn (höfund) og tímastimpil #}
+                        <small>
+                            Sent af: <strong>{{ post.username }}</strong> 
+                            þann {{ post.timestamp }}
+                        </small>
+                    </footer>
+                </article>
+                <hr>
+            {% endfor %}
+        {% else %}
+            <p>Engar færslur fundust í gagnagrunni.</p>
+        {% endif %}
+    </div>
 
 </main>
 {% include "footer.html" %}
