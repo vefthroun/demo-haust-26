@@ -1,12 +1,28 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from tinydb import TinyDB, Query
+import os                       # to generate secret key with operating system in flask app
+from datetime import datetime   # fyrir tímaskráningu pósta í spjallborði
+from pprint import pprint       # pprint er í standard libary
 
 app = Flask(__name__)
 
-app.secret_key = 'Þe551_lyki11_Er_3rf1ður!' # Nauðsynlegt fyrir session
+# Secret key for session management
+app.config["SECRET_KEY"] = os.urandom(16)
+# Display the secret key and current time in console for debugging
+#pprint(app.config["SECRET_KEY"])
+
+# --- Database Setup --- leiðin að db fundinn
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.abspath(os.path.join(BASE_DIR, 'data'))
+# Ensure DB folder exists & instantiate
+os.makedirs(DB_PATH, exist_ok=True) 
+
+POSTDB_FILE = os.path.join(DB_PATH, 'db.json')
+
+db = TinyDB(POSTDB_FILE, indent=2, encoding='utf-8', ensure_ascii=False)
 
 # tengja db við appið
-db = TinyDB('db.json', indent=2, encoding='utf-8', ensure_ascii=False)
+#db = TinyDB('db.json', indent=2, encoding='utf-8', ensure_ascii=False)
 users_table = db.table('users')
 posts_table = db.table('posts')
 User = Query()
@@ -118,7 +134,7 @@ def delete(id):
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
-    # Hér myndir þú leita að notanda í users_table
+    # Leitum að notanda í users_table
     user = users_table.get(User.username == username)
     if user:
         session['user_id'] = user.doc_id # doc_id er sjálfkrafa ID hjá TinyDB
