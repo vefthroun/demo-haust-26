@@ -3,22 +3,25 @@
     "1": {
       "username": "addiminn",
       "password": "addi123",
-      "role": "admin"
+      "role": "admin",
+      "doc_id": "1"
     },
     "2": {
       "username": "nonni",
       "password": "nonni123",
-      "role": "user"
+      "role": "user",
+      "doc_id": "2"
     },
     "3": {
       "username": "bubbi",
       "password": "bubbi123",
-      "role": "user"
+      "role": "user",
+      "doc_id": "3"
     }
   },
   "posts": {
     "3": {
-      "content": "þetta er póstur skrifaður af admin og síðan breytt til að vera efstur í listanum :)",
+      "content": "þetta er póstur skrifaður af admin og síðan breytt til að vera efstur í listanum :) og þar er ann",
       "author_id": 1,
       "timestamp": "19. 06. 2026.Kl.  13:35"
     },
@@ -36,6 +39,11 @@
       "content": "Nú er þetta allt að koma til en enn vantar að uppfæra póstana. nei það er komið :) Nú vantar bara tjáknin",
       "author_id": 2,
       "timestamp": "19. 06. 2026. Kl. 16:49"
+    },
+    "7": {
+      "content": "nú er mál að komast í stjórnborðið",
+      "author_id": 1,
+      "timestamp": "19. 06. 2026. Kl. 19:02"
     }
   },
   "favorites": {

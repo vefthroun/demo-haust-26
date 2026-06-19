@@ -47,8 +47,6 @@ def index():
     posts = get_posts_with_users()
     return render_template('index.html', posts=posts)
 
-# nýskráning
-
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -62,34 +60,48 @@ def signup():
         flash("Notandanafn er frátekið.")
     return render_template('signup.html')
 
-# innskráning
-
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    # 1. Sækjum gögn úr forminu með request.form
-    username = request.form.get('username')
-    password = request.form.get('password')
-    
-    # 2. Leitum að notanda í TinyDB
-    user = users_table.get((User.username == username) & (User.password == password))
-    
-    if user:
-        # 3. Vistum doc_id í session
-        session['user_id'] = user.doc_id
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = users_table.get((User.username == username) & (User.password == password))
         
-        # 4. Bætum við skilyrðinu fyrir administrator
-        # Ef notandanafnið er 'admin', fær hann hlutverkið 'admin' í session
-        if username == 'addiminn':
-            session['role'] = 'admin'
-        else:
-            # Annars fær hann hlutverkið sem er skráð í DB eða 'user' sem sjálfgefið
-            session['role'] = user.get('role', 'user')
+        if user:
+            session['user_id'] = user.doc_id # Vista ID í session
+            session['username'] = user['username']
+            return redirect(url_for('profile'))
+        flash("Rangt notandanafn eða lykilorð.")
+    return render_template('login.html')
+'''
+@app.route('/login', methods=['GET', 'POST']) # 1. Skilgreinum báðar aðferðir [1]
+def login():
+    # 2. Ef aðferðin er POST, þá vinnum við úr gögnunum úr forminu [2]
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        # Leitum að notanda í TinyDB (Conversation history)
+        user = users_table.get((User.username == username) & (User.password == password))
+        
+        if user:
+            session['user_id'] = user.doc_id # Vistum í session [4]
             
-        return redirect(url_for('profile'))
-    
-    # Ef innskráning mistekst
-    flash("Rangt notandanafn eða lykilorð.")
-    return redirect(url_for('login'))
+            # Skilyrði fyrir administrator eins og þú baðst um (Conversation history)
+            if username == 'admin':
+                session['role'] = 'admin'
+            else:
+                session['role'] = user.get('role', 'user')
+                
+            return redirect(url_for('profile')) # Sendum á prófíl eftir innskráningu [5]
+        
+        # Ef upplýsingar voru rangar
+        flash("Rangt notandanafn eða lykilorð.") # Gefum feedback [6]
+        return redirect(url_for('login'))
+
+    # 3. Ef aðferðin er GET (notandi bara að opna síðuna), birtum við formið [7]
+    return render_template('login.html')
+'''
 
 @app.route('/logout')
 def logout():
@@ -155,16 +167,22 @@ def edit_post(post_id):
 
 # stjórnborðið
 
-@app.route('/admin_panel')
+@app.route('/admin_panel' , methods=['POST'])
 def admin_panel():
-    # Athugum hvort notandi sé innskráður OG sé admin
-    if session.get('role') == 'admin':
-        allir_notendur = users_table.all()
-        return render_template('admin.html', users=allir_notendur)
-    
-    # Ef ekki admin, sendum hann burt með villuboðum
-    flash("Þú hefur ekki aðgang að þessari síðu.")
-    return redirect(url_for('index'))
+    # 1. Öryggisathugun: Aðeins admin má sjá þessa síðu [57, Conversation]
+    if session.get('role') != 'admin':
+        flash("Aðgangur bannaður.")
+        return redirect(url_for('index'))
+
+    # 2. Sækja alla notendur úr users töflunni
+    all_users = users_table.all()
+
+    # 3. MIKILVÆGT: Bæta doc_id handvirkt inn í hvert dict [1, 3]
+    # Annars virkar user.id ekki í HTML sniðmátinu
+    for user in all_users:
+        user['id'] = user.doc_id 
+
+    return render_template('admin.html', users=all_users)
 
 # 400 villur
 

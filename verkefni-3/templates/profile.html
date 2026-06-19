@@ -2,7 +2,9 @@
 {% block content %}
     <h1>Velkomin(n), {{ session.username }}</h1>
     {% if session.role == 'admin' %}
-        <h5><a href="/admin_panel">Stjórnborð</a></h5>
+        <form action="/admin_panel">
+            <button>Stjórnborð</button>
+        </form>
     {% endif %}
     <h3>Búa til nýjan póst</h3>
     <form action="{{ url_for('create_post') }}" method="POST">

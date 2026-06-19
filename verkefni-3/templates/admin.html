@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Stjórnun notenda</h1>
-    <h5><a href="/admin_panel">Stjórnborð</a></h5>
+
     <table class="admin-table">
         <thead>
             <tr>
@@ -16,23 +16,27 @@
         <tbody>
             {% for user in users %}
                 <tr>
+                    {# Nálgumst username og role úr db.json [19, Conversation] #}
                     <td>{{ user.username }}</td>
                     <td>
-                        <span class="role-tag {{ user.role }}">
-                            {{ user.role }}
+                        <span class="badge {{ user.role }}">
+                            {{ user.role | capitalize }}
                         </span>
                     </td>
                     <td>
-                        {# Aðgerð 1: Breyta hlutverki #}
+                        {# Notum 'id' sem við bættum við í bakendanum fyrir URL building [5] #}
                         {% if user.role != 'admin' %}
-                            <a href="{{ url_for('make_admin', user_id=user.doc_id) }}" class="btn-small">Gera að admin</a>
+                            <a href="{# url_for('change_role', user_id=user.id, new_role='admin') #}">Gera að admin</a>
+                        {% else %}
+                            <a href="{# url_for('change_role', user_id=user.id, new_role='user') #}">Gera að notanda</a>
                         {% endif %}
-
-                        {# Aðgerð 2: Eyða notanda (Conversation) #}
-                        <a href="{{ url_for('delete_user', user_id=user.doc_id) }}" 
-                           class="btn-danger" 
-                           onclick="return confirm('Ertu viss um að þú viljir eyða þessum notanda?')">
-                           Eyða
+                        
+                        | 
+                        
+                        <a href="{{ url_for('delete_user', user_id=user.id) }}" 
+                           style="color: red;"
+                           onclick="return confirm('Ertu viss um að þú viljir eyða {{ user.username }}?')">
+                           Eyða notanda
                         </a>
                     </td>
                 </tr>
