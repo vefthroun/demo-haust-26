@@ -1,43 +1,20 @@
-{% include "header.html" %}
-{# ckeditor.load() #}
-<main class="container">
-    <h2>Velkomin(n) {{ nemandi.nafn }}</h2>
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Velkomin(n), {{ session.username }}</h1>
     
-    <div>
-        <p>Nafn: {{ nemandi.nafn }}</p>
-        <p>Netfang: {{ nemandi.netfang }}</p>
-    </div>
+    <h3>Búa til nýjan póst</h3>
+    <form action="{{ url_for('create_post') }}" method="POST">
+        <textarea name="content" required></textarea><br>
+        <button type="submit">Senda póst</button>
+    </form>
 
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-		<ul class="flashes">
-		{% for message in messages %}
-			<li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	{% endif %}
-	{% endwith %}
-	<hr>
-	<section>
-		<h3>Skrifað í skjóðuna</h3>
-		<form action="/skrifa" method="post">
-			{# ckeditor.create() #}
-			<p><input type="text" name="fyrirsogn" placeholder="Fyrirsögn"></p>
-			<textarea name="postur" rows="4" placeholder="Skilaboð"></textarea>
-			<div class="grid">
-				<p>Höfundur<input type="text" name="hofundur" value="{{ nemandi.nafn }}"></p>
-				<p>Dagssetning (Verkefni 3)<input type="date" value="dagsetning"></p>
-			</div>
-			<input type="submit" value="senda">
-		</form>
-	</section>
-	<hr>
-	<div class="grid">
-		<p><a href="{{ url_for('index') }}">Aftur á forsíðu</a></p>
-		<form action="{{ url_for('logout') }}">
-			<button type="submit">Útskráning</button>
-		</form>
-	</div>
-</main>
-
-{% include "footer.html" %}
+    <hr>
+    <h3>Mínir póstar</h3>
+    {% for post in posts %}
+        <div class="my-post">
+            <p>{{ post.content }}</p>
+            <small>{{ post.timestamp }}</small> | 
+            <a href="{{ url_for('delete_post', post_id=post.id) }}" onclick="return confirm('Eyða?')">Eyða</a>
+        </div>
+    {% endfor %}
+{% endblock %}

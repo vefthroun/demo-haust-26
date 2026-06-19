@@ -1,38 +1,12 @@
-{% include "header.html" %}
-
-<header>
-    <h1 class="center"> {{ title }}</h1>
-</header>
-<main class="container">
-
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-		<ul class="flashes">
-		{% for message in messages %}
-		<li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	{% endif %}
-	{% endwith %}
-
-    <div>
-        {% if posts %}
-            {% for post in posts %}
-                <article>
-                    {# Birta innihald póstsins #}
-                    <p>{{ post.content  | safe }}</p>
-                    <hr>
-                        {# Birta notendanafn (höfund) og tímastimpil #}
-                        <small>
-                            Höfundur: <strong>{{ post.username }}</strong>. Dags: {{ post.timestamp }}
-                        </small>
-                </article>
-                <hr>
-            {% endfor %}
-        {% else %}
-            <p>Engar færslur fundust í gagnagrunni.</p>
-        {% endif %}
-    </div>
-
-</main>
-{% include "footer.html" %}
+{% extends "layout.html" %}
+{% block title %}Skilaboðaskjóðan{% endblock %}
+{% block content %}
+    <h3>Nýjustu skilaboðin</h3>
+    {% for post in posts %}
+        <article>
+            <p>{{ post.content }}</p>
+            <small>Sent af: {{ post.username }} | {{ post.timestamp }}</small>
+        </article>
+        <hr>
+    {% endfor %}
+{% endblock %}

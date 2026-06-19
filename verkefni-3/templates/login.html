@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<article class="container">
+    <h2>Innskráning</h2>
+    <form method="POST">
+        Notandanafn: <input type="text" name="username" required><br>
+        Lykilorð: <input type="password" name="password" required><br>
+        <button type="submit">Innskrá</button>
+    </form>
+</article>
+{% endblock %}
