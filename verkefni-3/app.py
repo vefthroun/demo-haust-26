@@ -38,7 +38,7 @@ def get_posts_with_users():
     return all_posts
 
 # Hvernig hægt er að uppfæra notanda (role:user) í admin
-users_table.update({'role': 'admin'}, Query().username == 'addiminn')
+#users_table.update({'role': 'admin'}, Query().username == 'addiminn')
 
 # --- RÁSIR (ROUTES) ---
 
@@ -46,6 +46,8 @@ users_table.update({'role': 'admin'}, Query().username == 'addiminn')
 def index():
     posts = get_posts_with_users()
     return render_template('index.html', posts=posts)
+
+# nýskráning
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -60,19 +62,34 @@ def signup():
         flash("Notandanafn er frátekið.")
     return render_template('signup.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+# innskráning
+
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        user = users_table.get((User.username == username) & (User.password == password))
+    # 1. Sækjum gögn úr forminu með request.form
+    username = request.form.get('username')
+    password = request.form.get('password')
+    
+    # 2. Leitum að notanda í TinyDB
+    user = users_table.get((User.username == username) & (User.password == password))
+    
+    if user:
+        # 3. Vistum doc_id í session
+        session['user_id'] = user.doc_id
         
-        if user:
-            session['user_id'] = user.doc_id # Vista ID í session
-            session['username'] = user['username']
-            return redirect(url_for('profile'))
-        flash("Rangt notandanafn eða lykilorð.")
-    return render_template('login.html')
+        # 4. Bætum við skilyrðinu fyrir administrator
+        # Ef notandanafnið er 'admin', fær hann hlutverkið 'admin' í session
+        if username == 'addiminn':
+            session['role'] = 'admin'
+        else:
+            # Annars fær hann hlutverkið sem er skráð í DB eða 'user' sem sjálfgefið
+            session['role'] = user.get('role', 'user')
+            
+        return redirect(url_for('profile'))
+    
+    # Ef innskráning mistekst
+    flash("Rangt notandanafn eða lykilorð.")
+    return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
