@@ -2,11 +2,13 @@
 {% block title %}Skilaboðaskjóðan{% endblock %}
 {% block content %}
     <h3>Nýjustu skilaboðin</h3>
+    <div class="newpost">
     {% for post in posts %}
         <article>
             <p>{{ post.content }}</p>
-            <small>Sent af: {{ post.username }} | {{ post.timestamp }}</small>
+            <small>Skrifað af: {{ post.username }} | {{ post.timestamp }}</small>
         </article>
         <hr>
     {% endfor %}
+    </div>
 {% endblock %}

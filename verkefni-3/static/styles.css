@@ -1,7 +1,11 @@
-      .center {
-        text-align: center;
-      }
-      .flashes {
-        color:red;
-        font-weight: 600;
-      }
+.center {
+    text-align: center;
+}
+.flashes {
+    color:red;
+    font-weight: 600;
+}
+.newpost {
+	display: flex;
+	flex-flow: column-reverse;
+}

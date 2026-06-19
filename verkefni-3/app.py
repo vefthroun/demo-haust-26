@@ -93,7 +93,7 @@ def create_post():
         posts_table.insert({
             'content': content,
             'author_id': session['user_id'],
-            'timestamp': datetime.now().strftime("%d. %m. %Y.Kl.  %H:%M") # Íslensk dagsetning skrá í db
+            'timestamp': datetime.now().strftime("%d. %m. %Y. Kl. %H:%M") # Íslensk dagsetning skráð í db
         })
     return redirect(url_for('profile'))
 

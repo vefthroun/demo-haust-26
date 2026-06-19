@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}Nýskráning{% endblock %}
+
+{% block content %}
+    <h2>Búa til nýjan aðgang</h2>
+    <article>
+		{# Formið sendir gögnin á /signup rásina með POST #}
+		<form action="{{ url_for('signup') }}" method="POST">
+			<div>
+				<label for="username">Notandanafn:</label>
+				{# 'name' eigindið verður að passa við request.form.get('username') í Python #}
+				<input type="text" id="username" name="username" required>
+			</div>
+			
+			<div>
+				<label for="password">Lykilorð:</label>
+				<input type="password" id="password" name="password" required>
+			</div>
+
+			<button type="submit">Nýskrá</button>
+		</form>
+	</article>
+    <p>Áttu þegar aðgang? <a href="{{ url_for('login') }}">Innskráning hér</a></p>
+{% endblock %}
