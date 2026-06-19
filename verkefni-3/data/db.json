@@ -17,23 +17,13 @@
     }
   },
   "posts": {
-    "1": {
-      "content": "Hæ öll! Þetta er fyrsti pósturinn minn á nýja spjallinu.",
-      "author_id": 1,
-      "timestamp": "06/18, 2026 10:30"
-    },
-    "2": {
-      "content": "Mér finnst Epguides API-ið virka mjög vel með Flask.",
-      "author_id": 2,
-      "timestamp": "06/18, 2026 11:45"
-    },
     "3": {
-      "content": "þetta er póstur skrifaður af admin",
+      "content": "þetta er póstur skrifaður af admin og síðan breytt til að vera efstur í listanum :)",
       "author_id": 1,
       "timestamp": "19. 06. 2026.Kl.  13:35"
     },
     "4": {
-      "content": "og þetta er póstur nr 2 frá Nonna",
+      "content": "og þetta er póstur nr 2 frá Nonna. sem er að breytast hér með",
       "author_id": 2,
       "timestamp": "19. 06. 2026. Kl. 14:08"
     },
@@ -41,6 +31,11 @@
       "content": "Það er gott að elska, alla leið til sólarinnar og til baka.",
       "author_id": 3,
       "timestamp": "19. 06. 2026. Kl. 14:19"
+    },
+    "6": {
+      "content": "Nú er þetta allt að koma til en enn vantar að uppfæra póstana. nei það er komið :) Nú vantar bara tjáknin",
+      "author_id": 2,
+      "timestamp": "19. 06. 2026. Kl. 16:49"
     }
   },
   "favorites": {

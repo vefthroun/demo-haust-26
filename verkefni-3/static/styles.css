@@ -4,6 +4,7 @@
 .flashes {
     color:red;
     font-weight: 600;
+    z-index:2;
 }
 .newpost {
 	display: flex;

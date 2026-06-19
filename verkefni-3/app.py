@@ -11,7 +11,7 @@ app.config["SECRET_KEY"] = os.urandom(16)
 # Display the secret key and current time in console for debugging
 pprint(app.config["SECRET_KEY"])
 
-# --- Database Setup --- leiðin að db fundinn
+# --- Database Setup --- leiðin að db.json fundinn
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.abspath(os.path.join(BASE_DIR, 'data'))
 # Ensure DB folder exists & instantiate
@@ -22,7 +22,6 @@ POSTDB_FILE = os.path.join(DB_PATH, 'db.json')
 db = TinyDB(POSTDB_FILE, indent=2, encoding='utf-8', ensure_ascii=False)
 
 # tengja db við appið
-#db = TinyDB('db.json', indent=2, encoding='utf-8', ensure_ascii=False)
 users_table = db.table('users')
 posts_table = db.table('posts')
 User = Query()
@@ -37,6 +36,9 @@ def get_posts_with_users():
         post['username'] = user['username'] if user else "Óþekktur"
         post['id'] = post.doc_id # Ná í doc_id fyrir eyðingu/uppfærslu
     return all_posts
+
+# Hvernig hægt er að uppfæra notanda (role:user) í admin
+users_table.update({'role': 'admin'}, Query().username == 'addiminn')
 
 # --- RÁSIR (ROUTES) ---
 
@@ -105,8 +107,47 @@ def delete_post(post_id):
         flash("Pósti eytt.")
     return redirect(url_for('profile'))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# Uppfærsla pósta
+
+@app.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
+def edit_post(post_id):
+    # 1. Athugum hvort notandi sé innskráður
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    # 2. Sækjum póstinn úr TinyDB með doc_id
+    post = posts_table.get(doc_id=post_id)
+
+    # 3. Öryggisathugun: Má notandinn breyta þessum pósti?
+    if not post or post['author_id'] != session['user_id']:
+        flash("Þú getur aðeins breytt þínum eigin póstum!")
+        return redirect(url_for('profile'))
+
+    if request.method == 'POST':
+        # 4. Sækjum nýja textann úr forminu
+        new_content = request.form.get('content')
+        
+        # 5. Uppfærum póstinn í gagnagrunninum
+        posts_table.update({'content': new_content}, doc_ids=[post_id])
+        
+        flash("Pósti hefur verið breytt!")
+        return redirect(url_for('profile'))
+
+    # Ef GET: Sýnum síðu með formi og gamla textanum
+    return render_template('edit_post.html', post=post)
+
+# stjórnborðið
+
+@app.route('/admin_panel')
+def admin_panel():
+    # Athugum hvort notandi sé innskráður OG sé admin
+    if session.get('role') == 'admin':
+        allir_notendur = users_table.all()
+        return render_template('admin.html', users=allir_notendur)
+    
+    # Ef ekki admin, sendum hann burt með villuboðum
+    flash("Þú hefur ekki aðgang að þessari síðu.")
+    return redirect(url_for('index'))
 
 # 400 villur
 

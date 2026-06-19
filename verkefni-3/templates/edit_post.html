@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}Breyta pósti{% endblock %}
+
+{% block content %}
+    <h1>Breyta pósti</h1>
+    <article>
+        <form method="POST">
+            <label for="content">Innihald:</label><br>
+            {# Birtum gamla textann inni í textarea #}
+            <textarea name="content" rows="5" cols="40" required>{{ post.content }}</textarea><br>
+            
+            <button type="submit">Vista breytingar</button>
+            <a href="{{ url_for('profile') }}">Hætta við</a>
+        </form>
+    </article>
+{% endblock %}

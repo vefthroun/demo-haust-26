@@ -6,7 +6,7 @@
     {% for post in posts %}
         <article>
             <p>{{ post.content }}</p>
-            <small>Skrifað af: {{ post.username }} | {{ post.timestamp }}</small>
+            <small>Skrifað þann: {{ post.timestamp }}. Höfundur: {{ post.username }}</small>
         </article>
         <hr>
     {% endfor %}

@@ -1,49 +1,42 @@
-{% include "header.html" %}
-<header>
-    <h1 class="center"> {{ title }}</h1>
-</header>
-<main class="container">
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-		<ul class="flashes">
-		{% for message in messages %}
-		<li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	{% endif %}
-	{% endwith %}
-	<h4>Listi yfir notendur</h4>
-	<table>
-		<tr>
-			<th>Nemandi</th><th>Email</th><th>Info</th><th>Delete</th>
-		</tr>
-		{% for id, info in nemendur.items() %}			
-		<tr>
-			<td><strong>{{ info.nafn }}</strong></td>
-			<td>{{ info.netfang }} </td>
-			<td>	<!-- nánari upplýsingar með ID -->
-				<a href="{{ url_for('view_student', id=id) }}" type="button">Skoða</a> 
-			</td>
-			<td>
-				<a href="{{ url_for('delete', id=id) }}" type="button">Eyða</a>
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
-	<hr>
-	<!--h4>Listi yfir greinar -- tekið fyrir í verkefni 3</h4>
-	{# for id, post in skilabod.items() #}
-		<h4>{# post.fyrirsogn #}</h4>
-		<p>{# post.postur #} </p>
-		<p><em>{# post.hofundur #}</em></p>
-		<p><a href="{# url_for('delete', id=id) #}" type="button">Eyða</a></p>
-		<hr-->
-	{# endfor #}
-	<div class="grid">
-		<p><a href="{{ url_for('index') }}">Aftur á forsíðu</a></p>
-		<form action="{{ url_for('logout') }}">
-			<button type="submit">Útskráning</button>
-		</form>
-	</div>
-</main>
-{% include "footer.html" %}
+{% extends "layout.html" %}
+
+{% block title %}Stjórnborð{% endblock %}
+
+{% block content %}
+    <h1>Stjórnun notenda</h1>
+    <h5><a href="/admin_panel">Stjórnborð</a></h5>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Notendanafn</th>
+                <th>Hlutverk</th>
+                <th>Aðgerðir</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>
+                        <span class="role-tag {{ user.role }}">
+                            {{ user.role }}
+                        </span>
+                    </td>
+                    <td>
+                        {# Aðgerð 1: Breyta hlutverki #}
+                        {% if user.role != 'admin' %}
+                            <a href="{{ url_for('make_admin', user_id=user.doc_id) }}" class="btn-small">Gera að admin</a>
+                        {% endif %}
+
+                        {# Aðgerð 2: Eyða notanda (Conversation) #}
+                        <a href="{{ url_for('delete_user', user_id=user.doc_id) }}" 
+                           class="btn-danger" 
+                           onclick="return confirm('Ertu viss um að þú viljir eyða þessum notanda?')">
+                           Eyða
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

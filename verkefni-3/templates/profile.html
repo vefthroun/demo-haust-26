@@ -1,20 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>Velkomin(n), {{ session.username }}</h1>
-    
+    {% if session.role == 'admin' %}
+        <h5><a href="/admin_panel">Stjórnborð</a></h5>
+    {% endif %}
     <h3>Búa til nýjan póst</h3>
     <form action="{{ url_for('create_post') }}" method="POST">
         <textarea name="content" required></textarea>
         <button type="submit">Senda póst</button>
     </form>
-
     <hr>
     <h3>Mínir póstar</h3>
     {% for post in posts %}
-        <div class="my-post">
+        <article>
             <p>{{ post.content }}</p>
-            <small>{{ post.timestamp }}</small> | 
-            <a href="{{ url_for('delete_post', post_id=post.id) }}" onclick="return confirm('Eyða?')">Eyða</a>
-        </div>
+            <small>{{ post.timestamp }}</small> |
+
+            {# Hlekkur á breytingasíðuna #}
+            <a href="{{ url_for('edit_post', post_id=post.id) }}">Breyta pósti</a> |
+        
+            <a href="{{ url_for('delete_post', post_id=post.id) }}" 
+                onclick="return confirm('Ertu alveg viss?')">Eyða pósti</a>
+
+        </article>
     {% endfor %}
 {% endblock %}
