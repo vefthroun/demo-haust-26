@@ -37,30 +37,27 @@
 
         {% block content %}{% endblock %}
     </main>
-
     <footer class="container">
-        <p class="center">&copy GJG. VEFÞ2VF, spönn 1, haust 2026.</p>
+        <p class="center">&copy GJG,  VEFÞ2VF, spönn 1, haust 2026. <!--a href="#" data-target="modal-admin" onclick="toggleModal(event)">Stjórnborð</a--></p>
     </footer>
-    <!-- Modal Dialog - login form for students
-    <dialog id="modal-example">
+    <!-- Modal Dialog - login form for administrator
+    <dialog id="modal-admin">
       <article>
         <header>
           <button
             aria-label="Close"
             rel="prev"
-            data-target="modal-example"
-            onclick="toggleModal(event)"
+            data-target="modal-admin"
+            onclick="toggleModalexample(event)"
           ></button>
-        <h3>&nbsp;</h3>
-        <form action="/login" method="POST">
-			<label for="user_id">
-            	<input type="text"  name="user_id" id="user_id" required placeholder="Nafn">
-			</label>
-            <label for="user_id">Lykilorð:</label>
-            <input type="text"  name="user_id" id="user_id" required>
-            <button type="submit">Skrá inn</button>
-        </form>
+        <h5>Innskráning</h5>
+        <form action="admin_panel" method="POST">
+            <input type="text" name="username" required placeholder="Notandanafn"><br>
+            <input type="password" name="password" required placeholder="Lykilorð"><br>
+        <button type="submit">Innskrá</button>
+    </form>
       </article>
-    </dialog>-->
+    </dialog>
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>-->
 </body>
 </html>

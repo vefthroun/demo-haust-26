@@ -70,38 +70,16 @@ def login():
         if user:
             session['user_id'] = user.doc_id # Vista ID í session
             session['username'] = user['username']
-            return redirect(url_for('profile'))
-        flash("Rangt notandanafn eða lykilorð.")
-    return render_template('login.html')
-'''
-@app.route('/login', methods=['GET', 'POST']) # 1. Skilgreinum báðar aðferðir [1]
-def login():
-    # 2. Ef aðferðin er POST, þá vinnum við úr gögnunum úr forminu [2]
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        
-        # Leitum að notanda í TinyDB (Conversation history)
-        user = users_table.get((User.username == username) & (User.password == password))
-        
-        if user:
-            session['user_id'] = user.doc_id # Vistum í session [4]
             
             # Skilyrði fyrir administrator eins og þú baðst um (Conversation history)
             if username == 'admin':
                 session['role'] = 'admin'
             else:
                 session['role'] = user.get('role', 'user')
-                
-            return redirect(url_for('profile')) # Sendum á prófíl eftir innskráningu [5]
+            return redirect(url_for('profile'))
         
-        # Ef upplýsingar voru rangar
-        flash("Rangt notandanafn eða lykilorð.") # Gefum feedback [6]
-        return redirect(url_for('login'))
-
-    # 3. Ef aðferðin er GET (notandi bara að opna síðuna), birtum við formið [7]
+        flash("Rangt notandanafn eða lykilorð.")
     return render_template('login.html')
-'''
 
 @app.route('/logout')
 def logout():
@@ -167,22 +145,72 @@ def edit_post(post_id):
 
 # stjórnborðið
 
-@app.route('/admin_panel' , methods=['POST'])
+@app.route('/admin_panel', methods=['GET', 'POST'])
 def admin_panel():
-    # 1. Öryggisathugun: Aðeins admin má sjá þessa síðu [57, Conversation]
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = users_table.get((User.username == username) & (User.password == password))
+
+    # 1. Öryggisathugun 
     if session.get('role') != 'admin':
-        flash("Aðgangur bannaður.")
+        flash("Aðgangur ekki leyfilegur")
         return redirect(url_for('index'))
 
-    # 2. Sækja alla notendur úr users töflunni
-    all_users = users_table.all()
+    # 2. Sækja og undirbúa notendur
+    users = users_table.all()
+    for u in users:
+        u['id'] = u.doc_id
 
-    # 3. MIKILVÆGT: Bæta doc_id handvirkt inn í hvert dict [1, 3]
-    # Annars virkar user.id ekki í HTML sniðmátinu
-    for user in all_users:
-        user['id'] = user.doc_id 
+    # 3. Sækja og undirbúa alla pósta
+    all_posts = posts_table.all()
+    for p in all_posts:
+        p['id'] = p.doc_id
+        # Fletta upp höfundi til að sýna nafn en ekki bara ID [3]
+        user = users_table.get(doc_id=p['author_id'])
+        p['username'] = user['username'] if user else "Óþekktur"
 
-    return render_template('admin.html', users=all_users)
+    return render_template('admin_panel.html', users=users, all_posts=all_posts)
+
+# Notandi fjarlægður
+
+@app.route('/delete_user/<int:user_id>')
+def delete_user(user_id):
+    # 1. Öryggisathugun: Aðeins admin má eyða notendum [57, Conversation]
+    if session.get('role') != 'admin':
+        flash("Aðgangur bannaður: Þú verður að vera stjórnandi.")
+        return redirect(url_for('index'))
+
+    # 2. Öryggisathugun: Kom í veg fyrir að admin eyði sjálfum sér (Conversation)
+    if user_id == session.get('user_id'):
+        flash("Þú getur ekki eytt sjálfum þér á meðan þú ert innskráð(ur)!")
+        return redirect(url_for('admin_panel'))
+
+    # 3. Eyða notandanum úr TinyDB
+    # Við notum doc_ids þar sem user_id kemur beint úr slóðinni [4, 5]
+    users_table.remove(doc_ids=[user_id])
+    
+    # Valfrjálst: Hér mætti líka eyða öllum póstum sem tilheyrðu þessum notanda (Conversation)
+    # posts_table.remove(Query().author_id == user_id)
+
+    # 4. Endurgjöf og flutningur aftur á stjórnborðið [3, 6]
+    flash("Notanda hefur verið eytt.")
+    return redirect(url_for('admin_panel'))
+
+# eyða póst frá admin stjórnborði
+
+@app.route('/delete_post_admin/<int:post_id>')
+def delete_post_admin(post_id):
+    # 1. Öryggisathugun fyrir admin [57, Conversation]
+    if session.get('role') != 'admin':
+        flash("Þú hefur ekki leyfi til að eyða póstum annarra.")
+        return redirect(url_for('index'))
+
+    # 2. Eyðum póstinum úr posts töflunni [1]
+    posts_table.remove(doc_ids=[post_id])
+    
+    flash("Pósti hefur verið eytt af stjórnanda.")
+    return redirect(url_for('admin_panel'))
 
 # 400 villur
 

@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %}Stjórnborð - Umsjón{% endblock %}
+
+{% block content %}
+    <h3>Stjórnborð kerfisstjóra</h3>
+
+    {# HLUTI 1: NOTENDASTJÓRNUN #}
+    <section class="admin-section">
+        <h2>Notendur</h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Notendanafn</th>
+                    <th>Hlutverk</th>
+                    <th>Aðgerðir</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td><span class="badge">{{ user.role }}</span></td>
+                        <td>
+                            {# Eyða notanda - notar doc_id úr bakenda [3, 4] #}
+                            {% if user.username != session.username %}
+                                <a href="{{ url_for('delete_user', user_id=user.id) }}" 
+                                   class="btn-danger" 
+                                   onclick="return confirm('Viltu örugglega eyða notandanum {{ user.username }}?')">
+                                   Eyða notanda
+                                </a>
+                            {% else %}
+                                <small>(Sjálfur þú)</small>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <hr>
+
+    {# HLUTI 2: PÓSTSTJÓRNUN #}
+    <section class="admin-section">
+        <h3>Allir póstar á spjallborði</h3>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Höfundur</th>
+                    <th>Innihald</th>
+                    <th>Tímasetning</th>
+                    <th>Aðgerðir</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in all_posts %}
+                    <tr>
+                        <td><strong>{{ post.username }}</strong></td>
+                        <td>{{ post.content | truncate(50) }}</td>
+                        <td>{{ post.timestamp }}</td>
+                        <td>
+                            {# Eyða pósti - notar doc_id póstsins [3, 4] #}
+                            <a href="{{ url_for('delete_post_admin', post_id=post.id) }}" 
+                               class="btn-danger" 
+                               onclick="return confirm('Eyða þessum pósti?')">
+                               Eyða pósti
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

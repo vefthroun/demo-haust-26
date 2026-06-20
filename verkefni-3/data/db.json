@@ -21,7 +21,7 @@
   },
   "posts": {
     "3": {
-      "content": "þetta er póstur skrifaður af admin og síðan breytt til að vera efstur í listanum :) og þar er ann",
+      "content": "þetta er póstur skrifaður af admin :) vegna þess að póstarnir eru með \"doc id\" er hægt með einfaldri CSS flex skipun er hægt að snúa röðinni við.  (það er líka hægt að gera það í appinu)",
       "author_id": 1,
       "timestamp": "19. 06. 2026.Kl.  13:35"
     },
@@ -40,10 +40,15 @@
       "author_id": 2,
       "timestamp": "19. 06. 2026. Kl. 16:49"
     },
-    "7": {
-      "content": "nú er mál að komast í stjórnborðið",
+    "8": {
+      "content": "Hrognin eru að koma, gerið kerin klár!",
+      "author_id": 3,
+      "timestamp": "20. 06. 2026. Kl. 09:42"
+    },
+    "10": {
+      "content": "Nú er hægt að eyða notendum og taka út pósta sem notendur hafa skrifað og ekki hafa hlotið náð hjá vefstjóranum frá Kasmír.",
       "author_id": 1,
-      "timestamp": "19. 06. 2026. Kl. 19:02"
+      "timestamp": "20. 06. 2026. Kl. 10:26"
     }
   },
   "favorites": {
