@@ -3,18 +3,20 @@
 {% block title %}20 Vinsælir Þættir{% endblock %}
 
 {% block content %}
-    <h1>Sjónvarpsþættir</h1>
-    <div class="grid">
+    <h2>20 vinsælustu sjónvarpsþættirnir</h2>
+    
+    <section class="grid">
         {% for show in shows %}
             <article>
+                {# API-ið skilar myndaslóð í 'image' lyklinum [3, Conversation] #}
+                <img src="{{ show.image }}" alt="{{ show.title }}" style="width: 200px;">
                 <h3>{{ show.title }}</h3>
                 <p><strong>Stöð:</strong> {{ show.network }}</p>
                 <p><strong>Land:</strong> {{ show.country }}</p>
-                {# Ef API-ið gefur myndaslóð er hún birt hér #}
-                {% if show.image %}
-                    <img src="{{ show.image }}" alt="{{ show.title }}" style="width:200px;">
-                {% endif %}
             </article>
+            <hr>
+        {% else %}
+            <p>Ekki tókst að sækja þætti í augnablikinu.</p>
         {% endfor %}
-    </div>
+        </sectioin>
 {% endblock %}
