@@ -12,7 +12,7 @@ def index():
     # 2. Ath: Ef /shows/ eða /popular skilar 404, þarftu að staðfesta 
     # réttan endapunkt í "REST API Reference" [3, Conversation].
     # Hér prófum við að sækja almennan lista (ef studdur):
-    api_url = f"{API_BASE_URL}/show/" 
+    api_url = f"{API_BASE_URL}/shows/?page=1&page_size=20" 
     
     try:
         response = requests.get(api_url)
@@ -20,7 +20,7 @@ def index():
 
         if response.status_code == 200:
             # Sækjum JSON og tökum fyrstu 20 eins og beðið var um [56, Conversation]
-            shows = response.json()[:20]
+            shows = response.json() #[:20]
             pprint(f"Sótti {len(shows)} þætti")
         else:
             pprint(f"Villa: API skilaði status {response.status_code}")
@@ -28,7 +28,7 @@ def index():
     except Exception as e:
         pprint(f"Tengingarvilla: {e}")
         shows = []
-
+    pprint(shows)
     return render_template('index.html', shows=shows)
 
 @app.route('/search')
