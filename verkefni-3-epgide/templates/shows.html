@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}20 Vinsælir Þættir{% endblock %}
+
+{% block content %}
+    <h1>Sjónvarpsþættir</h1>
+    <div class="grid">
+        {% for show in shows %}
+            <article>
+                <h3>{{ show.title }}</h3>
+                <p><strong>Stöð:</strong> {{ show.network }}</p>
+                <p><strong>Land:</strong> {{ show.country }}</p>
+                {# Ef API-ið gefur myndaslóð er hún birt hér #}
+                {% if show.image %}
+                    <img src="{{ show.image }}" alt="{{ show.title }}" style="width:200px;">
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+{% endblock %}
