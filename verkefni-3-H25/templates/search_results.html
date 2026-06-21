@@ -1,5 +1,7 @@
-{% include "header.html" %}
-<main class="col-5">
+{% extends "layout.html" %}
+{% block title %}Sjónvarpsþættir{% endblock %}
+{% block content %}
+<section class="col-4">
     {% for i in d %}
         <div>
             <h4>{{ i['show']['name'] }}</h4>
@@ -8,5 +10,5 @@
             </a>
         </div>
     {% endfor %}
-
-{% include "footer.html" %}
+</section>
+{% endblock %}

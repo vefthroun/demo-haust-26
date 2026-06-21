@@ -10,3 +10,40 @@
 	display: flex;
 	flex-flow: column-reverse;
 }
+
+/*kvikmyndagreinar fellilisti */
+#toggle {      
+    display: none;        /* checkbox */
+}
+.topnav label {          /* takki */
+    z-index: 9;
+    padding: 0 3px;
+    border-radius: 5px;
+}
+#toggle:checked ~ label {
+    background-color: var(--pico-color);
+    color: var(--pico-background-color);
+}
+.topmenu { 
+    display: flex;
+    flex-flow: row wrap;  
+    position: fixed; 
+    top: 3.5rem;
+    right: -100%;
+    width: 92%;
+    border: 1px solid;
+    border-radius: 4px;
+    background-color: var(--pico-background-color);
+    padding: 8px;
+    z-index: 9;
+    transition: right 0.5s ease-out;
+}
+.topnav #toggle:checked ~ .topmenu {
+    right: 2rem;
+    transition: right 0.5s ease-in;
+}
+.topmenu a {
+    text-align: center;
+    padding: 8px 24px;
+    text-decoration: none;
+}

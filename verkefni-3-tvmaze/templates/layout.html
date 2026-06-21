@@ -20,8 +20,35 @@
             <li><h5><a href="{{ url_for('index') }}">Klúbburinn</a></h5></li>
         </ul>
         <ul>
-            <li>Kvikmyndagreinar</li>
-            <li>Leit</li>
+            <li class="topnav">
+                <input type="checkbox" id="toggle">
+                <label for="toggle">&#9776; kvikmyndagreinar </label>
+                <section class="topmenu">
+                    <a href="/genres/Action">Action</a>
+                    <a href="/genres/Adventure">Adventure</a>
+                    <a href="/genres/Anime">Anime</a>
+                    <a href="/genres/Comedy">Comedy</a>
+                    <a href="/genres/Crime">Crime</a>
+                    <a href="/genres/Drama">Drama</a>
+                    <a href="/genres/Espionage">Espionage</a>
+                    <a href="/genres/Family">Family</a>
+                    <a href="/genres/Fantasy">Fantasy</a>
+                    <a href="/genres/History">History</a>
+                    <a href="/genres/Horror">Horror</a>
+                    <a href="/genres/Music">Music</a>
+                    <a href="/genres/Romance">Romance</a>
+                    <a href="/genres/Science-Fiction">Science-Fiction</a>
+                    <a href="/genres/Supernatural">Supernatural</a>
+                    <a href="/genres/Thriller">Thriller</a>
+                </section>
+            </li>
+            <li>
+                <form method="POST" action="/search">
+                <input type="search" name="query"
+                       placeholder="Sláðu inn EITT leitarorð" aria-label="Search"/>
+                <!--input type="text" name="query" placeholder="Sláðu inn EITT leitarorð"-->
+                </form>
+            </li>
         </ul>
     </nav>
     <header>

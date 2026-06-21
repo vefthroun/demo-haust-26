@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import urllib.request, json, random
 from pprint import pprint  # pprint er í standard libary
+import os # to generate secret key with operating system in flask app
 
 app = Flask(__name__)
+
+# Secret key for session management
+app.config["SECRET_KEY"] = os.urandom(16)
 
 # Forsíða með 20 handahófskenndum þáttum
 @app.route("/", methods=["GET", "POST"])
@@ -24,7 +28,7 @@ def shows(id):
     # þættir í sjónvarpsseríu
     seasid = urllib.request.urlopen("https://api.tvmaze.com/shows/%s/seasons" %id)
     seasons = json.loads(seasid.read().decode())
-    pprint(seasons)  # Skoðum gögnin í console
+    #pprint(seasons)  # Skoðum gögnin í console
     # leikarar í þáttunum
     castid= urllib.request.urlopen("https://api.tvmaze.com/shows/%s/cast" %id)
     cast = json.loads(castid.read().decode())
