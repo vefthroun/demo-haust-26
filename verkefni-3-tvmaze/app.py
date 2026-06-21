@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 import urllib.request, json, random
 from pprint import pprint  # pprint er í standard libary
 
-
 app = Flask(__name__)
 
 # Forsíða með 20 handahófskenndum þáttum
