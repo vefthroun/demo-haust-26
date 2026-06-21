@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}Leitarniðurstöður{% endblock %}
+{% block content %}
+    <h2>📺 Leitarniðurstöður</h2>
+    {% for i in d %}
+        <div>
+            <h4>{{ i['show']['name'] }}</h4>
+            <a href="/shows/{{ i['show']['id'] }}">
+                <img src="{{ i['show']['image']['medium'] }}">
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}

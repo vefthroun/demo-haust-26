@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TinyDB og Json">
+    <meta name="description" content="TWmaze API">
     <meta name="author" content="Guðmundur Jón Guðjónsson">
     <title> {% block title %}. 
-                Verkefni 3. TinyDB & JSON 
+                Verkefni 3. TWmaze API 
             {% endblock %}
     </title>
     <link rel="stylesheet" href="{{url_for('static', filename='pico.indigo.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='grid.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="icon" type="image/svg" href="/static/images/Glogo.svg">
 </head>
@@ -19,9 +20,12 @@
             <li><h5><a href="{{ url_for('index') }}">Klúbburinn</a></h5></li>
         </ul>
         <ul>
-            <li>Greinar: </li>
+            <li>kvikmyndagreinar í fellilista</li>
         </ul>
     </nav>
+    <header>
+        <h2 class="center">{{title}}</h2>
+    </header>
     <main class="container">
         {% with messages = get_flashed_messages() %}
             {% if messages %}

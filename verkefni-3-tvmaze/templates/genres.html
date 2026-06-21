@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Kvikmyndagreinar{% endblock %}
+{% block content %}
+    <h2>📺 Kvikmyndagreinar</h2>
+    <section class="col-5">
+        {% for i in d %}
+            {% if fl in i["genres"] %} <!-- hér er færibreytan (fl) borin saman við i["genres"] -->
+            <div>
+                <h4>{{ i["name"] }}</h4>
+                <a href="/shows/{{ i['id'] }}">
+                    <img src="{{i['image']['medium']}}">
+                </a>
+            </div>
+            {%endif%}
+        {%endfor%}
+    </section>
+{% endblock %}

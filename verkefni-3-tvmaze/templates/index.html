@@ -1,58 +1,14 @@
 {% extends "layout.html" %}
-{% block title %}Skilaboðaskjóðan{% endblock %}
+{% block title %}TVmaze sjónvarpsþættir{% endblock %}
 {% block content %}
-    <h2>📺 New TV Episodes</h2>
-    
-    <!-- Filter Form -->
-    <form method="GET" action="/">
-        <div>
-            <label for="date">Date</label>
-            <input type="date" class="form-control" id="date" name="date" value="{{ current_date }}">
-        </div>
-        <div>
-            <label for="country">Country Code</label>
-            <input type="text" id="country" name="country" placeholder="US" value="{{ current_country }}" maxlength="2">
-        </div>
-        <div>
-            <button type="submit">Filter Schedule</button>
-        </div>
-    </form>
-
-    <!-- Error Handling -->
-    {% if error %}
-        <div class="flashes">{{ error }}</div>
-    {% endif %}
-
-    <!-- Episodes Display Grid -->
-    <div class="grid">
-        {% for ep in episodes %}
-        <article>
-            <!-- TVmaze provides poster images inside the embedded 'show' block -->
-            {% if ep.show.image and ep.show.image.medium %}
-                <img src="{{ ep.show.image.medium }}" alt="{{ ep.show.name }}">
-            {% else %}
-                <div class="flashes">No Image Available</div>
-            {% endif %}
-            
+    <section class="col-5">
+        {% for i in listi%}
             <div>
-                <h5>{{ ep.show.name }}</h5>
-                <h6>
-                    Season {{ ep.season }}, Episode {{ ep.number }}: "{{ ep.name }}"
-                </h6>
-                <p>
-                    <strong>Airs at:</strong> {{ ep.airtime }} on {{ ep.show.network.name if ep.show.network else ep.show.webChannel.name }}
-                </p>
+                <p>{{ i["name"] }}</p>
+                <a href="/shows/{{ i['id'] }}">
+                    <img src="{{i['image']['medium']}}" title="{{ i['name'] }}">
+                </a>
             </div>
-            <div>
-                <a href="{{ ep.url }}" target="_blank" class="btn btn-sm btn-outline-secondary w-100">View on TVmaze</a>
-            </div>
-        </article>
-        {% else %}
-            {% if not error %}
-            <div class="center">
-                <p class="flashes">No episodes found for this date and country selection.</p>
-            </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+        {%endfor%}
+    </section>
 {% endblock %}

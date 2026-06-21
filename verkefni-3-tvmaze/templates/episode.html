@@ -1,6 +1,5 @@
-{% extends "layout.html" %}
-{% block title %}Sjónvarpsþáttur{% endblock %}
-<div class="col-2">
+{% include "header.html" %}
+<main class="col-2">
     <section>
         <h2>{{d[0]['name']}}</h2>
         <h5>Episode {{d[0]['number']}}: {{d[0]['name']}}</h5>
@@ -12,5 +11,5 @@
     </section>
     <p><a href="javascript:history.back()">Return to episodes</a></p>
     <p><a href="/">Return to the TW MAZE</a></p>
-</div>
-{% endblock %}
+</main>
+{% include "footer.html" %}

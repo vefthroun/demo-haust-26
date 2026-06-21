@@ -1,0 +1,75 @@
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-8,
+.col-13 {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.rammi div {
+    border: 1px dashed var(--nc-tx-1);
+    padding: 1rem;
+    margin: .5rem 0;
+}
+/* ipads */
+@media screen and (min-width:768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    .col-2,
+    .col-4,
+    .col-6,
+    .col-8 {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1rem;
+        row-gap: 0;
+    }
+    .col-3 {
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 1rem;
+        row-gap: 0;
+    }
+    .col-13 {
+        grid-template-columns: 1fr 3fr ;
+        column-gap: 2rem;
+        row-gap: 0;
+        padding-top: .5rem;
+    }
+}
+@media screen and (min-width:960px) {
+    .col-2,
+    .col-3 {
+        column-gap: 2rem;
+        row-gap: .5rem;
+    }
+    .col-4 {
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 2rem;
+        row-gap: .5rem;
+    }
+    .col-5 {
+        grid-template-columns: repeat(5, 1fr);
+        column-gap: 2rem;
+        row-gap: .5rem;
+    }
+    .col-6 {
+        grid-template-columns: repeat(6, 1fr);
+        column-gap: 2rem;
+        row-gap: .5rem;
+    }
+    .col-8 {
+        grid-template-columns: repeat(8, 1fr);
+        column-gap: 1rem;
+        row-gap: .5rem;
+    }
+}
+@media screen and (min-width:1280px) {
+    .container {
+        max-width: 1280px;
+        margin: auto;
+    }
+}

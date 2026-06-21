@@ -1,7 +1,6 @@
-{% extends "layout.html" %}
-{% block title %}Sjónvarpsþættir{% endblock %}
-{% block content %}
-<div class="col-2">
+{% include "header.html" %}
+
+<main class="col-2">
     <section>
         <h2>Season {{d[0]['season']}}</h2>
         <ul> <!-- Sýnum alla þætti í seríu -->
@@ -19,5 +18,5 @@
         <img src="{{d[0]['image']['original']}}">
         <p>{{ d[0]['summary'] | safe }}</p><!-- safe er Jinja filter sem túlkar html tög í streng-->
     </section>
-</div>
-{% endblock %}
+</main>
+{% include "footer.html" %}

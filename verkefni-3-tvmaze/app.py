@@ -1,48 +1,87 @@
-from flask import Flask, render_template, request
-import requests
-from datetime import datetime
+from flask import Flask, render_template, request, session, redirect, url_for, flash
+import urllib.request, json, random
+from pprint import pprint  # pprint er í standard libary
+
 
 app = Flask(__name__)
 
-# Base URL for the TVmaze API
-TVMAZE_BASE_URL = "https://api.tvmaze.com"
-
-@app.route('/')
+# Forsíða með 20 handahófskenndum þáttum
+@app.route("/", methods=["GET", "POST"])
 def index():
-    # Capture country code filter (defaults to 'US') and date (defaults to today)
-    country = request.args.get('country', 'US')
-    date_str = request.args.get('date', datetime.today().strftime('%d. %m. %Y.'))
+    title = "📺 TVmaze sjónvarpsþættir"
+    # Initial data load from TVmaze API
+    urlid = urllib.request.urlopen("https://api.tvmaze.com/shows")
+    data = json.loads(urlid.read().decode())
+    # pprint(data)  # Skoðum gögnin í console
+    # Veljum 20 handahófskennda þætti úr data
+    listi = random.sample(data,20)
+    return render_template("index.html", listi=listi, title=title)
 
-    # Endpoint for the schedule: /schedule?country=US&date=2026-06-20
-    schedule_url = f"{TVMAZE_BASE_URL}/schedule"
-    params = {
-        'country': country,
-        'date': date_str
-    }
-    
-    episodes_list = []
-    error_message = None
+# Sjónvarpsþáttaröð valin með id frá index eða genres
+@app.route("/shows/<int:id>")
+def shows(id):
+    urlid = urllib.request.urlopen("https://api.tvmaze.com/shows/%s" %id)
+    data = json.loads(urlid.read().decode())
+    # þættir í sjónvarpsseríu
+    seasid = urllib.request.urlopen("https://api.tvmaze.com/shows/%s/seasons" %id)
+    seasons = json.loads(seasid.read().decode())
+    pprint(seasons)  # Skoðum gögnin í console
+    # leikarar í þáttunum
+    castid= urllib.request.urlopen("https://api.tvmaze.com/shows/%s/cast" %id)
+    cast = json.loads(castid.read().decode())
+    #pprint(cast)  # Skoðum gögnin í console
+    return render_template("shows.html", d=data, s=seasons, c=cast, title=data["name"])
 
-    try:
-        response = requests.get(schedule_url, params=params, timeout=10)
-        # Check if rate limit (20 requests per 10 seconds) or another issue occurs
-        if response.status_code == 200:
-            episodes_list = response.json()
-        elif response.status_code == 429:
-            error_message = "Rate limit exceeded. Please wait a moment and try again."
-        else:
-            error_message = f"Failed to retrieve data from TVmaze (Status: {response.status_code})"
-    except requests.exceptions.RequestException as e:
-        error_message = f"An error occurred while connecting to the API: {str(e)}"
+# Sjónvarpsþættir í sjónvarpsseríu valin með id frá shows
+@app.route("/episodes/<int:id>")
+def episodes(id):       
+    urlid = urllib.request.urlopen("https://api.tvmaze.com/seasons/%s/episodes" %id)
+    data = json.loads(urlid.read().decode())
+    #pprint(data)  # Skoðum gögnin í console
+    title = "Episodes"
+    return render_template("episodes.html", d=data, title=title)
 
-    return render_template(
-        'index.html', 
-        episodes=episodes_list, 
-        current_date=date_str, 
-        current_country=country,
-        error=error_message
-    )
+# sjónvarpsþáttur í valdri þáttaröð
+@app.route("/seasons/<int:id>/episode/")
+def episode(season_id, id):
+    urlid = urllib.request.urlopen("https://api.tvmaze.com/seasons/%s/episodes/" %(id))
+    data = json.loads(urlid.read().decode())
+    #pprint(data)  # Skoðum gögnin í console
+    title = "Episode: " + data["name"]
+    return render_template("episode.html", d=data, title=title)
 
-if __name__ == '__main__':
-    # Run development server
-    app.run(debug=True)
+# Sjónvarpsþættir í völdum flokki - kvikmyndagrein.
+@app.route("/genres/<fl>")
+def flokkur(fl):
+    urlid = urllib.request.urlopen("https://api.tvmaze.com/shows")
+    data = json.loads(urlid.read().decode())
+    title = "Genre: " + fl
+    return render_template("genres.html", d=data, fl=fl, title=title)
+
+# Leit að þáttum
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if request.method == "POST":
+        query = request.form.get("query")
+        if len(query.strip().split()) > 1: # ath. ef fleiri en eitt orð skrifað í leit
+            flash("Please enter only one word in the search field.")
+            return render_template("search.html")
+        urlid = urllib.request.urlopen("https://api.tvmaze.com/search/shows?q=%s" %query)
+        data = json.loads(urlid.read().decode())
+        flash("Leit fyrir: " + query)
+        return render_template("search_results.html", d=data)
+    return render_template("search.html")
+
+# 404 
+@app.errorhandler(404)
+def error(x):
+    title = 'Vefsíðan finnst ekki'
+    return render_template('error-40x.html', title=title)
+# 405 
+@app.errorhandler(405)
+def erro(r):
+    title = 'Aðferð ekki leyfð'
+    return render_template('error-40x.html', title=title)
+
+if __name__ == "__main__":
+    app.run(debug=True, use_reloader=True)

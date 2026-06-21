@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}Kvikmyndagreinar{% endblock %}
+{% block content %}
+
+    <section class="col-2">
+        <h2>Leit að sjónvarpsþáttum</h2>
+        <form method="POST" action="/search">
+            <div>
+                <input type="text" name="query" placeholder="Sláðu inn EITT leitarorð">
+            </div>
+            <button type="submit">Leita</button>
+        </form>
+    </section>
+
+{% endblock %}
