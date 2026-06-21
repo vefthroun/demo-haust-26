@@ -18,6 +18,7 @@
 .topnav label {          /* takki */
     z-index: 9;
     padding: 0 3px;
+    margin-bottom: 20px;
     border-radius: 5px;
 }
 #toggle:checked ~ label {
@@ -44,6 +45,14 @@
 }
 .topmenu a {
     text-align: center;
-    padding: 8px 24px;
+    padding: 12px 24px;
     text-decoration: none;
+}
+body > nav { /* direct child */
+    flex-flow:column;
+}
+@media screen and (min-width:600px) {
+    body > nav { 
+    flex-flow:row;
+}
 }
