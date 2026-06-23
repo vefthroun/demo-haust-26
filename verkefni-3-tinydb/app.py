@@ -9,9 +9,9 @@ app = Flask(__name__)
 # Secret key for session management
 app.config["SECRET_KEY"] = os.urandom(16)
 # Display the secret key and current time in console for debugging
-pprint(app.config["SECRET_KEY"])
+# pprint(app.config["SECRET_KEY"])
 
-# --- Database Setup --- leiðin að db.json fundinn
+# --- DATABASE --- leiðin að db.json fundinn
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.abspath(os.path.join(BASE_DIR, 'data'))
 # Ensure DB folder exists & instantiate
@@ -21,7 +21,7 @@ POSTDB_FILE = os.path.join(DB_PATH, 'db.json')
 
 db = TinyDB(POSTDB_FILE, indent=2, encoding='utf-8', ensure_ascii=False)
 
-# tengja db við appið
+# --- AÐGANGSTÝRING db ---
 users_table = db.table('users')
 posts_table = db.table('posts')
 User = Query()
@@ -31,17 +31,13 @@ Post = Query()
 def get_posts_with_users():
     all_posts = posts_table.all()
     for post in all_posts:
-        # Nota author_id til að finna notanda [6, Conversation]
+        # Nota author_id til að finna notanda 
         user = users_table.get(doc_id=post['author_id'])
         post['username'] = user['username'] if user else "Óþekktur"
         post['id'] = post.doc_id # Ná í doc_id fyrir eyðingu/uppfærslu
     return all_posts
 
-# Hvernig hægt er að uppfæra notanda (role:user) í admin
-#users_table.update({'role': 'admin'}, Query().username == 'addiminn')
-
 # --- RÁSIR (ROUTES) ---
-
 @app.route('/')
 def index():
     posts = get_posts_with_users()
@@ -115,7 +111,6 @@ def delete_post(post_id):
     return redirect(url_for('profile'))
 
 # Uppfærsla pósta
-
 @app.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
 def edit_post(post_id):
     # 1. Athugum hvort notandi sé innskráður
@@ -144,7 +139,6 @@ def edit_post(post_id):
     return render_template('edit_post.html', post=post)
 
 # stjórnborðið
-
 @app.route('/admin_panel', methods=['GET', 'POST'])
 def admin_panel():
     if request.method == 'POST':
@@ -173,7 +167,6 @@ def admin_panel():
     return render_template('admin_panel.html', users=users, all_posts=all_posts)
 
 # Notandi fjarlægður
-
 @app.route('/delete_user/<int:user_id>')
 def delete_user(user_id):
     # 1. Öryggisathugun: Aðeins admin má eyða notendum [57, Conversation]
@@ -198,7 +191,6 @@ def delete_user(user_id):
     return redirect(url_for('admin_panel'))
 
 # eyða póst frá admin stjórnborði
-
 @app.route('/delete_post_admin/<int:post_id>')
 def delete_post_admin(post_id):
     # 1. Öryggisathugun fyrir admin [57, Conversation]
@@ -213,7 +205,6 @@ def delete_post_admin(post_id):
     return redirect(url_for('admin_panel'))
 
 # 400 villur
-
 @app.errorhandler(404)
 def error4(x):
     title = '404 - villa, röng vefslóð'
@@ -226,4 +217,3 @@ def error5(x):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
