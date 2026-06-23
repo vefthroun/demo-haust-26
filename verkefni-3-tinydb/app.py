@@ -19,6 +19,7 @@ os.makedirs(DB_PATH, exist_ok=True)
 
 POSTDB_FILE = os.path.join(DB_PATH, 'db.json')
 
+# indent tvö bil og hvert par fær sér línu. íslenskir stafir notaðir og ascii afþakkað
 db = TinyDB(POSTDB_FILE, indent=2, encoding='utf-8', ensure_ascii=False)
 
 # --- AÐGANGSTÝRING db ---
